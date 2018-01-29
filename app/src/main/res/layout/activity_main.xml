@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.kash.cstimemanagement.MainActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:id="@+id/RV_1" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_task_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:rippleColor="@android:color/transparent"
+        app:srcCompat="@drawable/add_task_button"
+        android:focusable="true" />
+
+</LinearLayout>

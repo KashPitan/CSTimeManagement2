@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kash.cstimemanagement.AddActivity">
+
+    <EditText
+        android:id="@+id/task_name_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:hint="Task Name"
+        android:inputType="text"
+        android:textSize="30dp"
+      />
+
+    <EditText
+        android:id="@+id/task_details_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/task_name_input"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:hint="Task Details"
+        android:inputType="text"
+        android:textSize="30dp"
+        tools:layout_editor_absoluteX="123dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_delete"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:text="Save"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="22dp"
+        android:layout_toEndOf="@+id/task_details_input"
+        android:layout_toRightOf="@+id/task_details_input"
+        android:text="DELETE"
+        android:textSize="10dp" />
+
+</RelativeLayout>
