@@ -21,7 +21,7 @@ public class SplashScreen extends Activity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    Intent intent = new Intent(SplashScreen.this,MainActivity.class);
+                    Intent intent = new Intent(SplashScreen.this,IntroSlides.class);
                     startActivity(intent);
                     //start main activity once sleep time is up
                 }

@@ -25,9 +25,6 @@ public class AddActivity extends AppCompatActivity {
         description = (EditText) findViewById(R.id.task_details_input);
         addDataButton = (Button) findViewById(R.id.add_task_button);
 
-        AddData();
-    }
-    public void AddData(){
         addDataButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -49,4 +46,5 @@ public class AddActivity extends AppCompatActivity {
         });
 
     }
+
 }

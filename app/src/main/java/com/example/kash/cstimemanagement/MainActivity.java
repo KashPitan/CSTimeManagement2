@@ -48,16 +48,30 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-       listItems = new ArrayList<>();
+        Cursor data = db.getData();
+       /*listItems = new ArrayList<>();
 
-       for(int i = 0; i <= 10; i++){
+       for(int i = 0; i <= 20; i++){
            Task task = new Task("heading " + (i +1),"filler text");
            listItems.add(task);
+       }*/
+
+       List<Task> taskList = new ArrayList<>();
+       int i = 0;
+       if(data.getCount() !=  0){
+            while(data.moveToNext()){
+                Task task = new Task(data.getString(1),data.getString(2));
+                taskList.add(i,task);
+                i++;
+            }
+
        }
 
+
        //create recycler view adapter
-        Adapter adapter = new Adapter(listItems,this);
+        Adapter adapter = new Adapter(taskList,this);
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager((new LinearLayoutManager(this)));
 
         //switch activity to add task activity upon button click
         ImageButton add_task_button = (ImageButton) findViewById(R.id.add_task_button);
