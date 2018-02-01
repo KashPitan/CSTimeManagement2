@@ -48,14 +48,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Cursor data = db.getData();
+        /*Cursor data = db.getData();
        /*listItems = new ArrayList<>();
 
        for(int i = 0; i <= 20; i++){
            Task task = new Task("heading " + (i +1),"filler text");
            listItems.add(task);
        }*/
-
+        /*
        List<Task> taskList = new ArrayList<>();
        int i = 0;
        if(data.getCount() !=  0){
@@ -66,10 +66,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
        }
+       */
 
 
        //create recycler view adapter
-        Adapter adapter = new Adapter(taskList,this);
+       // Adapter adapter = new Adapter(taskList,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
 

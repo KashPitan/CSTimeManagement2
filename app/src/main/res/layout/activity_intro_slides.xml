@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/swipeintro1"
+    android:background="@drawable/swipeintro"
     tools:context="com.example.kash.cstimemanagement.IntroSlides">
 
     <android.support.v4.view.ViewPager
@@ -17,6 +17,16 @@
         android:layout_marginBottom="47dp">
 
     </android.support.v4.view.ViewPager>
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/transparent"
+        android:text=" " />
 
     <LinearLayout
         android:id="@+id/introDots"
@@ -34,17 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Back" />
-
-    <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/buttonNext"
+        android:background="@android:color/transparent"
         android:text="Next" />
 
 </RelativeLayout>
