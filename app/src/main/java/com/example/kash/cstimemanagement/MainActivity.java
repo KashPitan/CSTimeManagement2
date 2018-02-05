@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //retrieve data from database and store in Cursor object
         Cursor data = db.getData();
 
        //create list to hold task objects
@@ -69,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                    Toast.makeText(MainActivity.this, "click test", Toast.LENGTH_SHORT).show();
                }
            });*/
-           Adapter.clickListener listener =
            mAdapter = new Adapter(taskList,this);
-           recyclerView.setAdapter(adapter);
+           mAdapter.setClickListener(this);
+           recyclerView.setAdapter(mAdapter);
            recyclerView.setLayoutManager((new LinearLayoutManager(this)));
        }else{
            Toast.makeText(MainActivity.this, "No data", Toast.LENGTH_SHORT).show();
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
 
     @Override
     public void onListItemClick(int itemIndex) {
-        Toast.makeText(MainActivity.this, "click test", Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(MainActivity.this, "click test", Toast.LENGTH_SHORT).show();
     }
 
     @Override

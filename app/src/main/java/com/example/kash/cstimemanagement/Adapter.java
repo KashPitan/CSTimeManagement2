@@ -23,12 +23,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     private Context context;
     private Cursor mCursor;
 
-    final private clickListener mOnClickListener;
+   private clickListener mOnClickListener;
 
-    public Adapter(List<Task> taskList, Context context, clickListener listener) {
+    public Adapter(List<Task> taskList, Context context/*, clickListener listener*/) {
         this.TaskList = taskList;
         this.context = context;
-        mOnClickListener = listener;
+        //mOnClickListener = listener;
     }
 
     @Override
@@ -65,8 +65,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         public ViewHolder(View itemView) {
             super(itemView);
 
-
-
             tvHeader = (TextView)itemView.findViewById(R.id.item_header);
             tvDetails = (TextView)itemView.findViewById(R.id.item_details);
 
@@ -81,6 +79,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             Toast.makeText(context,"test ",Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public void setClickListener(clickListener clickListener){
+        this.mOnClickListener = clickListener;
     }
 
     public interface clickListener{
