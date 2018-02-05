@@ -33,8 +33,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddActivity"></activity>
-        <activity android:name=".IntroSlides"></activity>
+        <activity android:name=".AddActivity" />
+        <activity android:name=".IntroSlides" />
+        <activity android:name=".ViewTask"></activity>
     </application>
 
 </manifest>

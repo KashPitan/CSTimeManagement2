@@ -1,61 +1,58 @@
 package com.example.kash.cstimemanagement;
 
-import android.app.LauncherActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListAdapter;
+import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements Adapter.clickListener{
 
     DBHelper db;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    private Cursor mCursor;
+    private Adapter mAdapter;
 
     private List<Task> listItems;
 
+    private Adapter.clickListener mOnClickListener;
+    FloatingActionButton add_task_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //switch activity to add task activity upon button click
+        add_task_button = (FloatingActionButton) findViewById(R.id.add_task_button);
+        add_task_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,AddActivity.class));
+            }
+        });
+
+        db = new DBHelper(this);
+
         //create recycler view
         recyclerView = (RecyclerView)findViewById(R.id.RV_1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        /*Cursor data = db.getData();
-       /*listItems = new ArrayList<>();
+        Cursor data = db.getData();
 
-       for(int i = 0; i <= 20; i++){
-           Task task = new Task("heading " + (i +1),"filler text");
-           listItems.add(task);
-       }*/
-        /*
+       //create list to hold task objects
        List<Task> taskList = new ArrayList<>();
        int i = 0;
        if(data.getCount() !=  0){
@@ -65,36 +62,26 @@ public class MainActivity extends AppCompatActivity {
                 i++;
             }
 
+           //create recycler view adapter
+           /*mAdapter = new Adapter(taskList,this, new Adapter.clickListener(){
+               @Override
+               public void onListItemClick(int itemIndex) {
+                   Toast.makeText(MainActivity.this, "click test", Toast.LENGTH_SHORT).show();
+               }
+           });*/
+           Adapter.clickListener listener =
+           mAdapter = new Adapter(taskList,this);
+           recyclerView.setAdapter(adapter);
+           recyclerView.setLayoutManager((new LinearLayoutManager(this)));
+       }else{
+           Toast.makeText(MainActivity.this, "No data", Toast.LENGTH_SHORT).show();
        }
-       */
 
+    }
 
-       //create recycler view adapter
-       // Adapter adapter = new Adapter(taskList,this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager((new LinearLayoutManager(this)));
-
-        //switch activity to add task activity upon button click
-        ImageButton add_task_button = (ImageButton) findViewById(R.id.add_task_button);
-        add_task_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,AddActivity.class));
-            }
-        });
-
-
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+    @Override
+    public void onListItemClick(int itemIndex) {
+        Toast.makeText(MainActivity.this, "click test", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -118,17 +105,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    private void populateRecyclerView(){
-
-        Cursor data = db.getData();
-        ArrayList<String> listData = new ArrayList<>();
-        while(data.moveToNext()){
-            listData.add(data.getString(1));
-        }
-
-       // adapter = new RecyclerViewAdapter<>(this, android.R.layout.simple_list_item_1,listData);
-        recyclerView.setAdapter(adapter);
-    }
-
 
 }
