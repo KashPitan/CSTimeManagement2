@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
     private Cursor mCursor;
     private Adapter mAdapter;
 
-    private List<Task> listItems;
+    private List<Task> taskList;
 
     private Adapter.clickListener mOnClickListener;
     FloatingActionButton add_task_button;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         Cursor data = db.getData();
 
        //create list to hold task objects
-       List<Task> taskList = new ArrayList<>();
+       taskList = new ArrayList<>();
        int i = 0;
        if(data.getCount() !=  0){
             while(data.moveToNext()){
@@ -82,7 +82,13 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
 
     @Override
     public void onListItemClick(int itemIndex) {
-      //  Toast.makeText(MainActivity.this, "click test", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "click test " + itemIndex, Toast.LENGTH_SHORT).show();
+        Task t = taskList.get(itemIndex);
+        //Toast.makeText(MainActivity.this, t.getTask() + " " + t.getTaskDetails(), Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this,ViewTask.class);
+        i.putExtra("taskName",t.getTask());
+        i.putExtra("taskDetails",t.getTaskDetails());
+        startActivity(i);
     }
 
     @Override

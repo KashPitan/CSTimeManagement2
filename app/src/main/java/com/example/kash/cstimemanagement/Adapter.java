@@ -76,7 +76,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
             // startActivity(new Intent(context,ViewTask.class));
-            Toast.makeText(context,"test ",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context,"test ",Toast.LENGTH_SHORT).show();
         }
 
     }
