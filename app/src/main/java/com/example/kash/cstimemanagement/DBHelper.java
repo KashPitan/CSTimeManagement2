@@ -49,9 +49,33 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    public Cursor getItemId(int itemIndex){
+        return null;
+    }
     public Cursor getData(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLENAME, null);
         return data;
+    }
+    public void updateData(String tName, String tTitle,int id) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL2, tName);
+        contentValues.put(COL3, tTitle);
+        String idString[] = {String.valueOf(id)};
+        sqLiteDatabase.update(TABLENAME,contentValues,"id=?",idString);
+
+       /*sqLiteDatabase.execSQL("UPDATE " + TABLENAME + " SET " + COL2 + " = " + tName  + " , " +
+                COL3 + " = " + tTitle + " WHERE " + COL1 + " = " + id);*/
+
+
+        //change to boolean and return true if successful
+    }
+    public void deleteData(int id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String idString[] = {String.valueOf(id)};
+        sqLiteDatabase.delete(TABLENAME, "id=?", idString);
+
     }
 }

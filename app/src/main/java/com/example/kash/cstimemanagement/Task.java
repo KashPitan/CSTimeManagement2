@@ -7,10 +7,12 @@ package com.example.kash.cstimemanagement;
 public class Task {
     private String task;
     private String taskDetails;
+    private int dbId;
 
-    public Task(String task, String taskDetails) {
+    public Task(String task, String taskDetails,int dbId) {
         this.task = task;
         this.taskDetails = taskDetails;
+        this.dbId = dbId;
     }
 
     public String getTask() {
@@ -20,4 +22,6 @@ public class Task {
     public String getTaskDetails() {
         return taskDetails;
     }
+
+    public int getTaskDBId(){return dbId;}
 }

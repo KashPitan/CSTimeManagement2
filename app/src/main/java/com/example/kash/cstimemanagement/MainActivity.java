@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
     DBHelper db;
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+   // private RecyclerView.Adapter adapter;
     private Cursor mCursor;
     private Adapter mAdapter;
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
        int i = 0;
        if(data.getCount() !=  0){
             while(data.moveToNext()){
-                Task task = new Task(data.getString(1),data.getString(2));
+                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0));
                 taskList.add(i,task);
                 i++;
             }
@@ -77,17 +77,19 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
        }else{
            Toast.makeText(MainActivity.this, "No data", Toast.LENGTH_SHORT).show();
        }
-
     }
 
     @Override
     public void onListItemClick(int itemIndex) {
         //Toast.makeText(MainActivity.this, "click test " + itemIndex, Toast.LENGTH_SHORT).show();
         Task t = taskList.get(itemIndex);
-        //Toast.makeText(MainActivity.this, t.getTask() + " " + t.getTaskDetails(), Toast.LENGTH_SHORT).show();
+
+       // Toast.makeText(MainActivity.this, t.getTask() + " " + t.getTaskDetails() + " " + t.getTaskDBId() , Toast.LENGTH_SHORT).show();
+
         Intent i = new Intent(this,ViewTask.class);
         i.putExtra("taskName",t.getTask());
         i.putExtra("taskDetails",t.getTaskDetails());
+        i.putExtra("taskId", t.getTaskDBId());
         startActivity(i);
     }
 
