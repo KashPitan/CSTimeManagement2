@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL1 ="TASKID";
     public static final String COL2 ="TASKNAME";
     public static final String COL3 ="TASKDETAILS";
+    public static final String COL4 ="ISCOMPLETE";
 
     public DBHelper(Context context) {
         super(context,DBNAME, null,1);
@@ -27,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER)");
     }
 
     @Override
@@ -35,11 +36,12 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLENAME);
         onCreate(sqLiteDatabase);
     }
-    public boolean addData(String tName, String tTitle) {
+    public boolean addData(String tName, String tTitle,int isComplete) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, tName);
         contentValues.put(COL3, tTitle);
+        contentValues.put(COL4,isComplete);
 
         long result = sqLiteDatabase.insert(TABLENAME, null, contentValues);
 
@@ -52,11 +54,26 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getItemId(int itemIndex){
         return null;
     }
+
     public Cursor getData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLENAME, null);
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME, null);
         return data;
     }
+
+    //return only completed tasks
+    public Cursor getCompleteData(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " WHERE " + COL4 + " = 1",null);
+        return data;
+    }
+
+    public Cursor getInCompleteTaskData(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " WHERE " + COL4 + " = 0",null);
+        return data;
+    }
+
     public void updateData(String tName, String tTitle,int id) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -76,6 +93,17 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         String idString[] = {String.valueOf(id)};
         sqLiteDatabase.delete(TABLENAME, "id=?", idString);
+
+    }
+
+    public void setToComplete(int id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL4, 1);
+        String idString[] = {String.valueOf(id)};
+
+        sqLiteDatabase.update(TABLENAME, contentValues,"id=?", idString);
 
     }
 }

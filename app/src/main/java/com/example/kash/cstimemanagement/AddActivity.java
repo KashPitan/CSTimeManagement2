@@ -55,7 +55,8 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void AddData(String taskTitle, String taskDescription){
-       boolean insertData = db.addData(taskTitle,taskDescription);
+        //task labelled incomplete upon creation
+       boolean insertData = db.addData(taskTitle,taskDescription,0);
 
                 //display toast messages to show user whether or not data entry has been successful
                 if(insertData == true){

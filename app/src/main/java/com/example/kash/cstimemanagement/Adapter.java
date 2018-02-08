@@ -25,10 +25,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
    private clickListener mOnClickListener;
 
-    public Adapter(List<Task> taskList, Context context/*, clickListener listener*/) {
+    public Adapter(List<Task> taskList, Context context, Cursor cursor) {
         this.TaskList = taskList;
         this.context = context;
-        //mOnClickListener = listener;
+        this.mCursor = cursor;
     }
 
     @Override
@@ -48,6 +48,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
         holder.tvHeader.setText(Task.getTask());
         holder.tvDetails.setText(Task.getTaskDetails());
+       // int id = mCursor.getInt(mCursor.getColumnIndex("TASKID"));
+        //holder.itemView.setTag(id);
     }
 
     @Override
@@ -88,5 +90,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         void onListItemClick(int itemIndex);
     }
 
-
+    public void removeFromRecycler(int itemIndex){
+        TaskList.remove(itemIndex -1);
+        notifyItemRemoved(itemIndex-1);
+    }
 }

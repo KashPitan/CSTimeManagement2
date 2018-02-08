@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">CSTimeManagement</string>
     <string name="action_settings">Settings</string>
+    <string name="Drawer_open">open</string>
+    <string name="Drawer_close">close</string>
+
+
 </resources>

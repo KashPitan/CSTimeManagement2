@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.kash.cstimemanagement.MainActivity">
+    android:id="@+id/activity_main_drawer_layout">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/RV_1"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/activity_main_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        android:backgroundTint="@android:color/transparent"
-        android:scrollbars="vertical" />
+        android:orientation="vertical"
+        tools:context="com.example.kash.cstimemanagement.MainActivity">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_task_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:borderWidth="0dp"
-        android:scaleType="center"
-        app:fabSize="normal"
-        android:backgroundTint="@color/colorPrimary"
-        app:layout_anchor="@+id/RV_1"
-        app:layout_anchorGravity="right|bottom"
-        app:srcCompat="@drawable/activity_main_add_task_button" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RV_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:scrollbars="vertical" />
 
-</android.support.design.widget.CoordinatorLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_task_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:borderWidth="0dp"
+            android:scaleType="center"
+            app:fabSize="normal"
+            android:backgroundTint="@color/colorPrimary"
+            app:layout_anchor="@+id/RV_1"
+            app:layout_anchorGravity="right|bottom"
+            app:srcCompat="@drawable/activity_main_add_task_button" />
+    </android.support.design.widget.CoordinatorLayout>
+
+    <ListView
+        android:id="@+id/activity_main_navigation_view_list_view"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:background="@android:color/white" />
+
+</android.support.v4.widget.DrawerLayout>
