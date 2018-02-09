@@ -43,6 +43,25 @@
         android:layout_gravity="center"
         />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_view_task_urgent_checkBox"
+        android:text="Urgent"
+        android:textSize="15sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_gravity="center"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_view_task_important_checkBox"
+        android:text="Important"
+        android:textSize="15sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_gravity="center"
+        />
+
     <Button
         android:id="@+id/view_task_save_changes_button"
         android:layout_width="wrap_content"

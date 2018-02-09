@@ -20,6 +20,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL2 ="TASKNAME";
     public static final String COL3 ="TASKDETAILS";
     public static final String COL4 ="ISCOMPLETE";
+    public static final String COL5 ="URGENCY";
+    public static final String COL6 ="IMPORTANCE";
+    public static final String COL7 ="PRIORITY";
+
 
     public DBHelper(Context context) {
         super(context,DBNAME, null,1);
@@ -28,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER)");
     }
 
     @Override
@@ -36,12 +40,16 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLENAME);
         onCreate(sqLiteDatabase);
     }
-    public boolean addData(String tName, String tTitle,int isComplete) {
+    public boolean addData(String tName, String tTitle,int isComplete, int urgency, int importance) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, tName);
         contentValues.put(COL3, tTitle);
         contentValues.put(COL4,isComplete);
+        contentValues.put(COL5, urgency);
+        contentValues.put(COL6, importance);
+
+        //add calculation for priority here
 
         long result = sqLiteDatabase.insert(TABLENAME, null, contentValues);
 
@@ -74,12 +82,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public void updateData(String tName, String tTitle,int id) {
+    public void updateData(String tName, String tTitle,int id, int tUrgency, int tImportance) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, tName);
         contentValues.put(COL3, tTitle);
+        contentValues.put(COL5,tUrgency);
+        contentValues.put(COL6,tImportance);
         String idString[] = {String.valueOf(id)};
         sqLiteDatabase.update(TABLENAME,contentValues,"id=?",idString);
 

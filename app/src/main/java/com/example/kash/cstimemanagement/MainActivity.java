@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         data = db.getData();
                         recyclerViewItems();
+                        mDrawerLayout.closeDrawers();
                         break;
                     //completed tasks
                     case 1:
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         data = db.getCompleteData();
                         recyclerViewItems();
+                        mDrawerLayout.closeDrawers();
                         break;
                      //incomplete tasks
                     case 2:
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         data = db.getInCompleteTaskData();
                         recyclerViewItems();
+                        mDrawerLayout.closeDrawers();
                         break;
                     default:
                         Toast.makeText(MainActivity.this, "No data", Toast.LENGTH_SHORT).show();
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         int i = 0;
         if(data.getCount() !=  0){
             while(data.moveToNext()){
-                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0));
+                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5));
                 displayList.add(i,task);
                 i++;
             }
@@ -173,12 +176,15 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         //Toast.makeText(MainActivity.this, "click test " + itemIndex, Toast.LENGTH_SHORT).show();
         Task t = displayList.get(itemIndex);
 
-       // Toast.makeText(MainActivity.this, t.getTask() + " " + t.getTaskDetails() + " " + t.getTaskDBId() , Toast.LENGTH_SHORT).show();
+       //Toast.makeText(MainActivity.this, t.getTask() + " " + t.getTaskDetails() + " " + t.getTaskDBId() , Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this,t.isImportant() + " " + t.isUrgent(),Toast.LENGTH_SHORT).show();
 
         Intent i = new Intent(this,ViewTask.class);
         i.putExtra("taskName",t.getTask());
         i.putExtra("taskDetails",t.getTaskDetails());
         i.putExtra("taskId", t.getTaskDBId());
+        i.putExtra("taskUrgency",t.isUrgent());
+        i.putExtra("taskImportance",t.isImportant());
         startActivity(i);
     }
 

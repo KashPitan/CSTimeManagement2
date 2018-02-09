@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,11 +15,16 @@ public class AddActivity extends AppCompatActivity {
     Button addDataButton;
     Button backButton;
     EditText title,description;
+    CheckBox urgencyBox,importanceBox;
+    private int isUrgent, isImportant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        importanceBox = (CheckBox)findViewById(R.id.activity_add_checkBox_importance);
+        urgencyBox = (CheckBox)findViewById(R.id.activity_add_checkBox_urgency);
 
         //back button
         backButton = (Button) findViewById(R.id.activityAdd_button_back_);
@@ -40,9 +46,19 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String taskTitle = title.getText().toString();
                 String taskDescription = description.getText().toString();
+                if(importanceBox.isChecked()){
+                    isImportant = 1;
+                }else{
+                    isImportant = 0;
+                }
+                if(urgencyBox.isChecked()){
+                    isUrgent = 1;
+                }else{
+                    isUrgent = 0;
+                }
 
                 if(taskTitle.length() != 0 && taskDescription.length() != 0){
-                    AddData(taskTitle,taskDescription);
+                    AddData(taskTitle,taskDescription,isUrgent,isImportant);
                     description.setText("");
                     title.setText("");
                     //switch back to main activity where new task should be shown
@@ -54,9 +70,9 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-    public void AddData(String taskTitle, String taskDescription){
+    public void AddData(String taskTitle, String taskDescription,int isUrgent, int isImportant){
         //task labelled incomplete upon creation
-       boolean insertData = db.addData(taskTitle,taskDescription,0);
+       boolean insertData = db.addData(taskTitle,taskDescription,0,isUrgent, isImportant);
 
                 //display toast messages to show user whether or not data entry has been successful
                 if(insertData == true){
@@ -65,8 +81,5 @@ public class AddActivity extends AppCompatActivity {
                     Toast.makeText(AddActivity.this, "Error: Task could not be added", Toast.LENGTH_SHORT).show();
                 }
 
-
-
     }
-
 }
