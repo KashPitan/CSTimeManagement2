@@ -11,14 +11,16 @@ public class Task {
     private boolean complete;
     private int urgency;
     private int importance;
+    private int priority;
 
-    public Task(String task, String taskDetails,int dbId, int urgency, int importance) {
+    public Task(String task, String taskDetails,int dbId, int urgency, int importance,int priority) {
         this.task = task;
         this.taskDetails = taskDetails;
         this.dbId = dbId;
         this.complete = false;
         this.urgency = urgency;
         this.importance = importance;
+        this.priority = priority;
 
     }
 
@@ -49,4 +51,5 @@ public class Task {
             return false;
         }
     }
+    public int getPriority(){return priority;}
 }

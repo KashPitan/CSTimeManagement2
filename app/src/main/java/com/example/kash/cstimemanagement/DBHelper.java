@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER)");
     }
 
     @Override
@@ -43,13 +43,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean addData(String tName, String tTitle,int isComplete, int urgency, int importance) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+
+        int priority = getPriority(urgency,importance);
         contentValues.put(COL2, tName);
         contentValues.put(COL3, tTitle);
         contentValues.put(COL4,isComplete);
         contentValues.put(COL5, urgency);
         contentValues.put(COL6, importance);
-
-        //add calculation for priority here
+        contentValues.put(COL7,priority);
 
         long result = sqLiteDatabase.insert(TABLENAME, null, contentValues);
 
@@ -61,6 +62,25 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public Cursor getItemId(int itemIndex){
         return null;
+    }
+
+    //calculate priority
+    //top priority == 1 lowest = 4
+    public int getPriority(int urgency, int importance){
+        int priority;
+
+        if((urgency == 1) & (importance == 1)){
+            priority = 1;
+        }else if((urgency == 0) & (importance == 1)){
+            priority = 2;
+        }else if((urgency == 1) & (importance == 0)){
+            priority = 3;
+        }else if((urgency == 0) & (importance == 0)){
+            priority = 4;
+        }else{
+            priority = 4;
+        }
+        return priority;
     }
 
     public Cursor getData(){
@@ -76,9 +96,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    //return only incomplete tasks
     public Cursor getInCompleteTaskData(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " WHERE " + COL4 + " = 0",null);
+        return data;
+    }
+
+    //return tasks in order of priority (highest first)
+    public Cursor getPrioritisedTaskData(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " ORDER BY " + COL7 + " ASC",null);
         return data;
     }
 
@@ -90,6 +118,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COL3, tTitle);
         contentValues.put(COL5,tUrgency);
         contentValues.put(COL6,tImportance);
+        contentValues.put(COL7,getPriority(tUrgency,tImportance));
         String idString[] = {String.valueOf(id)};
         sqLiteDatabase.update(TABLENAME,contentValues,"id=?",idString);
 

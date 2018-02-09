@@ -48,8 +48,27 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
         holder.tvHeader.setText(Task.getTask());
         holder.tvDetails.setText(Task.getTaskDetails());
+
+        holder.priorityIcon.setImageResource(priorityImage(Task));
        // int id = mCursor.getInt(mCursor.getColumnIndex("TASKID"));
         //holder.itemView.setTag(id);
+    }
+
+    public int priorityImage(Task task){
+        int priorityImageId;
+        switch(task.getPriority()){
+            case 1: priorityImageId = R.drawable.priority_level_1;
+                    break;
+            case 2: priorityImageId = R.drawable.priority_level_2;
+                break;
+            case 3: priorityImageId = R.drawable.priority_level_3;
+                break;
+            case 4: priorityImageId = R.drawable.priority_level_4;
+                break;
+            default: priorityImageId = R.drawable.priority_level_4;
+                break;
+        }
+        return priorityImageId;
     }
 
     @Override
@@ -63,12 +82,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
         public TextView tvHeader;
         public TextView tvDetails;
+        public ImageView priorityIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             tvHeader = (TextView)itemView.findViewById(R.id.item_header);
             tvDetails = (TextView)itemView.findViewById(R.id.item_details);
+            priorityIcon = (ImageView) itemView.findViewById(R.id.task_list_item_priority_icon);
 
             itemView.setOnClickListener(this);
         }
@@ -94,4 +115,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         TaskList.remove(itemIndex -1);
         notifyItemRemoved(itemIndex-1);
     }
+
 }

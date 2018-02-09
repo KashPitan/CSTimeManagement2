@@ -118,6 +118,14 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         mDrawerLayout.closeDrawers();
                         break;
+                    case 3:
+                        Toast.makeText(MainActivity.this, "Prioritised Tasks", Toast.LENGTH_SHORT).show();
+                        clearList();
+                        recyclerViewItems();
+                        data = db.getPrioritisedTaskData();
+                        recyclerViewItems();
+                        mDrawerLayout.closeDrawers();
+                        break;
                     default:
                         Toast.makeText(MainActivity.this, "No data", Toast.LENGTH_SHORT).show();
                         break;
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         int i = 0;
         if(data.getCount() !=  0){
             while(data.moveToNext()){
-                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5));
+                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6));
                 displayList.add(i,task);
                 i++;
             }
@@ -177,7 +185,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         Task t = displayList.get(itemIndex);
 
        //Toast.makeText(MainActivity.this, t.getTask() + " " + t.getTaskDetails() + " " + t.getTaskDBId() , Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this,t.isImportant() + " " + t.isUrgent(),Toast.LENGTH_SHORT).show();
+       // Toast.makeText(MainActivity.this,t.isImportant() + " " + t.isUrgent(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this,t.getPriority() + "",Toast.LENGTH_SHORT).show();
 
         Intent i = new Intent(this,ViewTask.class);
         i.putExtra("taskName",t.getTask());
@@ -185,11 +194,12 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         i.putExtra("taskId", t.getTaskDBId());
         i.putExtra("taskUrgency",t.isUrgent());
         i.putExtra("taskImportance",t.isImportant());
+        i.putExtra("taskPriority", t.getPriority());
         startActivity(i);
     }
 
     private void addDrawerItems(){
-        String[] arr_itemNames = {"All Tasks","Completed Tasks","Incomplete Tasks"};
+        String[] arr_itemNames = {"All Tasks","Completed Tasks","Incomplete Tasks", "Prioritised Tasks"};
         mArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arr_itemNames);
         mDrawerList.setAdapter(mArrayAdapter);
     }

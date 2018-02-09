@@ -10,7 +10,7 @@
         android:id="@+id/task_name_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:padding="15sp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:hint="Task Name"
@@ -29,6 +29,7 @@
         android:hint="Task Details"
         android:inputType="text"
         android:textSize="30dp"
+        android:padding="15sp"
         tools:layout_editor_absoluteX="123dp"
         tools:layout_editor_absoluteY="29dp" />
 
