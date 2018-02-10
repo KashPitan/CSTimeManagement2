@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingTop="30sp"
     tools:context="com.example.kash.cstimemanagement.ViewTask">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task Title"
+        android:focusable="true"
         android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         android:layout_gravity="center"
@@ -22,7 +24,8 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:textSize="40sp"
-        android:padding="15sp"
+        android:paddingTop="15sp"
+
         android:layout_gravity="center"
         />
 
@@ -44,41 +47,73 @@
         android:padding="15sp"
         android:layout_gravity="center"
         />
-
-    <CheckBox
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/activity_view_task_urgent_checkBox"
-        android:text="Urgent"
-        android:textSize="15sp"
-        android:textColor="@color/colorPrimary"
-        android:layout_gravity="center"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_view_task_urgent_checkBox"
+            android:text="Urgent"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center"/>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_view_task_important_checkBox"
-        android:text="Important"
-        android:textSize="15sp"
-        android:textColor="@color/colorPrimary"
-        android:layout_gravity="center"
-        />
+        <CheckBox
+            android:id="@+id/activity_view_task_important_checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Important"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp" />
 
-    <Button
-        android:id="@+id/view_task_save_changes_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="10sp"
-        android:text="Save Changes" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/view_task_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete Task"
-        android:layout_gravity="center"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:textSize="10sp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="20sp"
+            >
+
+            <Button
+                android:id="@+id/view_task_save_changes_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimaryDark"
+                android:padding="12sp"
+                android:text="Save Changes"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/view_task_delete_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:background="@color/colorAccent"
+                android:padding="12sp"
+                android:text="Delete Task"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
 </LinearLayout>

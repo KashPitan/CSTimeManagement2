@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         mDrawerLayout.closeDrawers();
                         break;
+                    //prioritised tasks
                     case 3:
                         Toast.makeText(MainActivity.this, "Prioritised Tasks", Toast.LENGTH_SHORT).show();
                         clearList();
