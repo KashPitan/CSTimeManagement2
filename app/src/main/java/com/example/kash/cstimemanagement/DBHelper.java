@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL5 ="URGENCY";
     public static final String COL6 ="IMPORTANCE";
     public static final String COL7 ="PRIORITY";
-
+    public static final String COL8 ="DATECREATED";
 
     public DBHelper(Context context) {
         super(context,DBNAME, null,1);
@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER, DATE TEXT)");
     }
 
     @Override

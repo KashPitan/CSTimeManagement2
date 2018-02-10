@@ -38,7 +38,7 @@
             android:backgroundTint="@color/colorAccent"
             app:layout_anchor="@+id/RV_1"
             app:layout_anchorGravity="right|bottom"
-            app:srcCompat="@drawable/activity_main_add_task_button" />
+            app:srcCompat="@drawable/mainactivity_add_task_button" />
     </android.support.design.widget.CoordinatorLayout>
 
     <ListView
