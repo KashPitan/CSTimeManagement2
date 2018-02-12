@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER, DATE TEXT)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER, DATECREATED INTEGER)");
     }
 
     @Override
@@ -51,6 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COL5, urgency);
         contentValues.put(COL6, importance);
         contentValues.put(COL7,priority);
+        contentValues.put(COL8, System.currentTimeMillis());
 
         long result = sqLiteDatabase.insert(TABLENAME, null, contentValues);
 

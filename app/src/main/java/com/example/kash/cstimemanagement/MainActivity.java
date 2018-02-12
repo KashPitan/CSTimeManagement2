@@ -86,8 +86,10 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
 
         //retrieve data from database and store in Cursor object
         data = db.getData();
+        //Toast.makeText(MainActivity.this, "N " + System.currentTimeMillis(), Toast.LENGTH_SHORT).show();
 
-       //create list to hold task objects
+
+        //create list to hold task objects
        //taskList = new ArrayList<>();
         displayList = new ArrayList<>();
         recyclerViewItems();
@@ -171,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         int i = 0;
         if(data.getCount() !=  0){
             while(data.moveToNext()){
-                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6));
+                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7));
                 displayList.add(i,task);
                 i++;
             }
@@ -202,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         i.putExtra("taskUrgency",t.isUrgent());
         i.putExtra("taskImportance",t.isImportant());
         i.putExtra("taskPriority", t.getPriority());
+        i.putExtra("taskDateCreated", t.getDateCreated());
         startActivity(i);
     }
 

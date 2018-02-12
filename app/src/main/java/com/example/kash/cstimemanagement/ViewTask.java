@@ -2,6 +2,7 @@ package com.example.kash.cstimemanagement;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ViewTask extends AppCompatActivity {
     DBHelper db;
@@ -22,26 +30,33 @@ public class ViewTask extends AppCompatActivity {
     Button editButton;
     Button deleteButton;
     private int isUrgent, isImportant;
+    TextView dateCreated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
+        setTitle(" ");
 
         //retrieve intent from main activity
         Intent intentExtras = getIntent();
-
 
         final String taskName = intentExtras.getStringExtra("taskName");
         final String taskDetails = intentExtras.getStringExtra("taskDetails");
         final int taskId =  intentExtras.getExtras().getInt("taskId");
         final boolean taskUrgency = intentExtras.getExtras().getBoolean("taskUrgency");
         final boolean taskImportance = intentExtras.getExtras().getBoolean("taskImportance");
+        final long taskDateCreated = intentExtras.getExtras().getLong("taskDateCreated");
 
         taskTitle = (EditText) findViewById(R.id.view_task_title);
         taskDescription = (EditText) findViewById(R.id.view_task_description);
         urgentBox = (CheckBox) findViewById(R.id.activity_view_task_urgent_checkBox);
         importantBox = (CheckBox) findViewById(R.id.activity_view_task_important_checkBox);
+        dateCreated = (TextView)findViewById(R.id.activity_view_task_date_created);
+
+        long longDateCreated = taskDateCreated;
+        String displayDate = formatDate(longDateCreated,"dd/MM/yyyy");
+        dateCreated.setText(displayDate);
 
         taskTitle.setText(taskName);
         taskDescription.setText(taskDetails);
@@ -128,6 +143,14 @@ public class ViewTask extends AppCompatActivity {
         });
 
 
+    }
+
+    public String formatDate(long milli, String format){
+        DateFormat formatter = new SimpleDateFormat(format);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milli);
+        return formatter.format(calendar.getTime());
     }
     public void UpdateData(String taskTitle, String taskDescription,int id,int taskUrgency,int taskImportance){
          db.updateData(taskTitle,taskDescription,id,taskUrgency,taskImportance);

@@ -1,6 +1,7 @@
 package com.example.kash.cstimemanagement;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,7 +14,10 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,12 +40,19 @@ public class AddActivity extends AppCompatActivity {
     String stringDateToFormat;
     int intDateToFormat;
 
+    private TextView displayTime;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+    String stringTimeToFormat;
+    int intTimeToFormat;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        setTitle("Add Task");
 
-        /*displayDate = (TextView)findViewById(R.id.activity_add_date_input);
+        displayDate = (TextView)findViewById(R.id.activity_add_date_input);
         displayDate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,11 +61,10 @@ public class AddActivity extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dateDialog = new DatePickerDialog(AddActivity.this,android.R.style.Theme_Holo_Dialog_MinWidth,mDateSetListener,year,month,day);
+                DatePickerDialog dateDialog = new DatePickerDialog(AddActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener,year,month,day);
                 dateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dateDialog.show();
             }}
-
         );
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -64,12 +74,41 @@ public class AddActivity extends AppCompatActivity {
                 stringDateToFormat = String.valueOf(day) + String.valueOf(month) + String.valueOf(year);
                 intDateToFormat = Integer.parseInt(stringDateToFormat);
                 //Toast.makeText(AddActivity.this, " " + intDateToFormat, Toast.LENGTH_SHORT).show();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("hhmm");
 
                 //Date date  = dateFormat.parse(stringDateToFormat.toString());
                 displayDate.setText(dateString);
             }
-        };*/
+        };
+
+        displayTime = (TextView)findViewById(R.id.activity_add_time_input);
+        displayTime.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal2 = Calendar.getInstance();
+                int hour = cal2.get(Calendar.HOUR_OF_DAY);
+                int minute = cal2.get(Calendar.MINUTE);
+                int second = cal2.get(Calendar.SECOND);
+
+                TimePickerDialog timeDialog = new TimePickerDialog(AddActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mTimeSetListener,hour,minute,true);
+                timeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timeDialog.show();
+            }
+        });
+
+        mTimeSetListener = new TimePickerDialog.OnTimeSetListener(){
+            @Override
+            public void onTimeSet(TimePicker view, int hour, int minute) {
+                String timeString = hour + ":" + minute;
+                stringTimeToFormat = String.valueOf(hour) + String.valueOf(minute);
+                intTimeToFormat = Integer.parseInt(stringTimeToFormat);
+                //Toast.makeText(AddActivity.this, " " + intDateToFormat, Toast.LENGTH_SHORT).show();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+
+                //Date date  = dateFormat.parse(stringDateToFormat.toString());
+                displayTime.setText(timeString);
+            }
+        };
 
         importanceBox = (CheckBox)findViewById(R.id.activity_add_checkBox_importance);
         urgencyBox = (CheckBox)findViewById(R.id.activity_add_checkBox_urgency);

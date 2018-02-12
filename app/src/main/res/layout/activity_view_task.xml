@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="30sp"
+    android:padding="30sp"
     tools:context="com.example.kash.cstimemanagement.ViewTask">
 
     <TextView
@@ -23,8 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:textSize="40sp"
-        android:paddingTop="15sp"
+        android:textSize="20sp"
+        android:paddingTop="8sp"
         android:layout_gravity="center"
         />
 
@@ -37,22 +43,79 @@
         android:layout_gravity="center"
         />
 
-    <EditText
-        android:id="@+id/view_task_description"
-        android:layout_width="wrap_content"
+    <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="70sp"
+    android:id="@+id/activity_add_scroll_view_description"
+    android:background="@drawable/border"
+    >
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textSize="30sp"
-        android:padding="15sp"
-        android:layout_gravity="center"
-        />
+        >
+
+        <EditText
+            android:id="@+id/view_task_description"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:gravity="left"
+            android:paddingLeft="4sp"
+            android:background="@android:color/transparent"
+            android:inputType="textMultiLine"
+            android:textSize="15sp"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+</ScrollView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date Created"
         android:layout_gravity="center"
-        />
+        android:text="Date Created"
+        android:textColor="@color/colorPrimary"
+        android:padding="4sp"/>
+
+    <TextView
+        android:id="@+id/activity_view_task_date_created"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Date Created"
+        android:padding="4sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Date Due"
+        android:textColor="@color/colorPrimary"
+        android:padding="4sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Date Due Edit"
+        android:padding="4sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Time Due"
+        android:textColor="@color/colorPrimary"
+        android:padding="4sp"/>
+
+    <TextView
+        android:id="@+id/activity_view_task_time_due"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Time Due Edit"
+        android:padding="4sp"/>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -81,8 +144,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -123,4 +185,5 @@
     </RelativeLayout>
 
 
+</LinearLayout>
 </LinearLayout>
