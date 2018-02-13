@@ -85,8 +85,8 @@ public class ViewTask extends AppCompatActivity {
         editButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String sTaskTitle = taskTitle.getText().toString();
-                String sTaskDescription = taskDescription.getText().toString();
+                final String sTaskTitle = taskTitle.getText().toString();
+                final String sTaskDescription = taskDescription.getText().toString();
 
                 if(urgentBox.isChecked()){
                     isUrgent = 1;
@@ -101,15 +101,39 @@ public class ViewTask extends AppCompatActivity {
                     isImportant = 0;
                 }
 
-                if(taskTitle.length() != 0 && taskDescription.length() != 0){
-                    UpdateData(sTaskTitle,sTaskDescription,taskId,isUrgent,isImportant);
-                    //description.setText("");
-                    //title.setText("");
-                    //switch back to main activity where new task should be shown
-                    startActivity(new Intent(ViewTask.this,MainActivity.class));
-                }else{
-                    Toast.makeText(ViewTask.this, "Please Fill In", Toast.LENGTH_SHORT).show();
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewTask.this);
+                builder.setMessage("Save changes?");
+                builder.setTitle("UPDATE TASK");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if(taskTitle.length() != 0 && taskDescription.length() != 0){
+                            UpdateData(sTaskTitle,sTaskDescription,taskId,isUrgent,isImportant);
+                            //switch back to main activity where new task should be shown
+                            startActivity(new Intent(ViewTask.this,MainActivity.class));
+                        }else{
+                            Toast.makeText(ViewTask.this, "Please Fill In", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        startActivity(new Intent(ViewTask.this,MainActivity.class));
+                        Toast.makeText(ViewTask.this, "Changes Saved", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(ViewTask.this,MainActivity.class));
+
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
 
         });
