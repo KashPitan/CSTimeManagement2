@@ -1,5 +1,6 @@
 package com.example.kash.cstimemanagement;
 
+import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -124,9 +126,15 @@ public class AddActivity extends AppCompatActivity {
 
         //create database
         db = new DBHelper(this);
+
         title = (EditText) findViewById(R.id.task_name_input);
         description = (EditText) findViewById(R.id.task_details_input);
         addDataButton = (Button) findViewById(R.id.button_save);
+
+        //back button in action bar
+       getSupportActionBar().setDisplayShowHomeEnabled(true);
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         addDataButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -157,7 +165,17 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-    public void AddData(String taskTitle, String taskDescription,int isUrgent, int isImportant){
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void AddData(String taskTitle, String taskDescription, int isUrgent, int isImportant){
         //task labelled incomplete upon creation
        boolean insertData = db.addData(taskTitle,taskDescription,0,isUrgent, isImportant);
 

@@ -107,7 +107,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //return tasks in order of priority (highest first)
     public Cursor getPrioritisedTaskData(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " ORDER BY " + COL7 + " ASC",null);
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " WHERE " + COL4 + "= 0" + " ORDER BY " + COL7 + " ASC",null);
         return data;
     }
 

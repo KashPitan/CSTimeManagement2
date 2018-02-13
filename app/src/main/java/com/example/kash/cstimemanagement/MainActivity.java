@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
     DBHelper db;
     private List<Task> taskList;
     private List<Task> completedTaskList;
+
     //list used to display tasks
     private List<Task> displayList;
 
@@ -49,14 +50,17 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
     private ListView mDrawerList;
     private ArrayAdapter<String> mArrayAdapter;
 
-    // private RecyclerView.Adapter adapter;
-    //private Adapter.clickListener mOnClickListener;
+    private TextView subheading;
+    private String subheadingString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        subheading = (TextView)findViewById(R.id.activity_main_subheader);
+        subheadingString = "All Tasks";
+        subheading.setText(subheadingString);
 
         mDrawerList = (ListView)findViewById(R.id.activity_main_navigation_view_list_view);
         addDrawerItems();
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         data = db.getData();
                         recyclerViewItems();
+                        subheading.setText("All Tasks");
                         mDrawerLayout.closeDrawers();
                         break;
                     //completed tasks
@@ -115,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         data = db.getCompleteData();
                         recyclerViewItems();
+                        subheading.setText("Completed Tasks");
                         mDrawerLayout.closeDrawers();
                         break;
                      //incomplete tasks
@@ -124,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         data = db.getInCompleteTaskData();
                         recyclerViewItems();
+                        subheading.setText("Incomplete Tasks");
                         mDrawerLayout.closeDrawers();
                         break;
                     //prioritised tasks
@@ -133,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         recyclerViewItems();
                         data = db.getPrioritisedTaskData();
                         recyclerViewItems();
+                        subheading.setText("Prioritised Tasks");
                         mDrawerLayout.closeDrawers();
                         break;
                     default:
