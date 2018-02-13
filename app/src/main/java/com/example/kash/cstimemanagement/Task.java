@@ -13,8 +13,9 @@ public class Task {
     private int importance;
     private int priority;
     private long dateCreated;
+    private long dateDue;
 
-    public Task(String task, String taskDetails,int dbId, int urgency, int importance,int priority, long dateCreated) {
+    public Task(String task, String taskDetails,int dbId, int urgency, int importance,int priority, long dateCreated, long dateDue) {
         this.task = task;
         this.taskDetails = taskDetails;
         this.dbId = dbId;
@@ -23,6 +24,7 @@ public class Task {
         this.importance = importance;
         this.priority = priority;
         this.dateCreated = dateCreated;
+        this.dateDue = dateDue;
 
     }
 
@@ -56,4 +58,7 @@ public class Task {
     public int getPriority(){return priority;}
 
     public long getDateCreated(){return dateCreated;}
+
+    public long getDateDue(){return dateDue;}
+
 }

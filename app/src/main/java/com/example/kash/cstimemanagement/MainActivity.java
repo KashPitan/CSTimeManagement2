@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         int i = 0;
         if(data.getCount() !=  0){
             while(data.moveToNext()){
-                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7));
+                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7),data.getLong(8));
                 displayList.add(i,task);
                 i++;
             }
@@ -204,6 +204,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
        //Toast.makeText(MainActivity.this, t.getTask() + " " + t.getTaskDetails() + " " + t.getTaskDBId() , Toast.LENGTH_SHORT).show();
        // Toast.makeText(MainActivity.this,t.isImportant() + " " + t.isUrgent(),Toast.LENGTH_SHORT).show();
         //Toast.makeText(MainActivity.this,t.getPriority() + "",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this,t.getDateCreated() + "",Toast.LENGTH_SHORT).show();
+
 
         Intent i = new Intent(this,ViewTask.class);
         i.putExtra("taskName",t.getTask());
@@ -213,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         i.putExtra("taskImportance",t.isImportant());
         i.putExtra("taskPriority", t.getPriority());
         i.putExtra("taskDateCreated", t.getDateCreated());
+        i.putExtra("taskDateDue", t.getDateDue());
         startActivity(i);
     }
 

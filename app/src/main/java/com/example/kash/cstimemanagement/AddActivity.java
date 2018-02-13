@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,9 +22,11 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -46,6 +49,13 @@ public class AddActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     String stringTimeToFormat;
     int intTimeToFormat;
+
+    private int dueDay = 0;
+    private int dueMonth = 0;
+    private int dueYear = 0;
+    private int dueHour = 0;
+    private int dueMinute = 0;
+
 
 
     @Override
@@ -72,13 +82,21 @@ public class AddActivity extends AppCompatActivity {
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
+
+                //month value is 1 short of being correct
+                month++;
+
+                //save the input values to convert to long value for later
+                dueYear = year;
+                dueMonth = month;
+                dueDay = day;
+
                 String dateString = day + "/" + month + "/" + year;
                 stringDateToFormat = String.valueOf(day) + String.valueOf(month) + String.valueOf(year);
                 intDateToFormat = Integer.parseInt(stringDateToFormat);
                 //Toast.makeText(AddActivity.this, " " + intDateToFormat, Toast.LENGTH_SHORT).show();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("hhmm");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
 
-                //Date date  = dateFormat.parse(stringDateToFormat.toString());
                 displayDate.setText(dateString);
             }
         };
@@ -90,7 +108,6 @@ public class AddActivity extends AppCompatActivity {
                 Calendar cal2 = Calendar.getInstance();
                 int hour = cal2.get(Calendar.HOUR_OF_DAY);
                 int minute = cal2.get(Calendar.MINUTE);
-                int second = cal2.get(Calendar.SECOND);
 
                 TimePickerDialog timeDialog = new TimePickerDialog(AddActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mTimeSetListener,hour,minute,true);
                 timeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -101,11 +118,15 @@ public class AddActivity extends AppCompatActivity {
         mTimeSetListener = new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view, int hour, int minute) {
+
+                dueHour = hour;
+                dueMinute = minute;
+
                 String timeString = hour + ":" + minute;
                 stringTimeToFormat = String.valueOf(hour) + String.valueOf(minute);
                 intTimeToFormat = Integer.parseInt(stringTimeToFormat);
                 //Toast.makeText(AddActivity.this, " " + intDateToFormat, Toast.LENGTH_SHORT).show();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat(" HHmm");
 
                 //Date date  = dateFormat.parse(stringDateToFormat.toString());
                 displayTime.setText(timeString);
@@ -132,13 +153,18 @@ public class AddActivity extends AppCompatActivity {
         addDataButton = (Button) findViewById(R.id.button_save);
 
         //back button in action bar
-       getSupportActionBar().setDisplayShowHomeEnabled(true);
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         addDataButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Calendar cal3 = new GregorianCalendar(dueYear,dueMonth,dueDay,dueHour,dueMinute,0);
+                Log.e("CALENDAR INPUT HOUR", "" + dueHour);
+                cal3.set(Calendar.HOUR_OF_DAY, dueHour);
+                long dueDateLong = cal3.getTimeInMillis();
+
                 String taskTitle = title.getText().toString();
                 String taskDescription = description.getText().toString();
                 if(importanceBox.isChecked()){
@@ -153,9 +179,13 @@ public class AddActivity extends AppCompatActivity {
                 }
 
                 if(taskTitle.length() != 0 && taskDescription.length() != 0){
-                    AddData(taskTitle,taskDescription,isUrgent,isImportant);
+                    AddData(taskTitle,taskDescription,isUrgent,isImportant,dueDateLong);
                     description.setText("");
                     title.setText("");
+                    Log.e("CALENDAR INPUT", " " + dueYear + " " + dueMonth + " " + dueDay + " " + dueHour + " " + dueMinute);
+                    Log.e("CALENDAR INPUT LONG", " " + dueDateLong);
+                    //Toast.makeText(AddActivity.this, " " + dueDateLong, Toast.LENGTH_SHORT).show();
+
                     //switch back to main activity where new task should be shown
                     startActivity(new Intent(AddActivity.this,MainActivity.class));
                 }else{
@@ -175,9 +205,9 @@ public class AddActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void AddData(String taskTitle, String taskDescription, int isUrgent, int isImportant){
+    public void AddData(String taskTitle, String taskDescription, int isUrgent, int isImportant,long dueDate){
         //task labelled incomplete upon creation
-       boolean insertData = db.addData(taskTitle,taskDescription,0,isUrgent, isImportant);
+       boolean insertData = db.addData(taskTitle,taskDescription,0,isUrgent, isImportant,dueDate);
 
                 //display toast messages to show user whether or not data entry has been successful
                 if(insertData == true){

@@ -24,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL6 ="IMPORTANCE";
     public static final String COL7 ="PRIORITY";
     public static final String COL8 ="DATECREATED";
+    public static final String COL9 = "DATEDUE";
 
     public DBHelper(Context context) {
         super(context,DBNAME, null,1);
@@ -32,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER, DATECREATED INTEGER)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER, DATECREATED INTEGER, DATEDUE INTEGER)");
     }
 
     @Override
@@ -40,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLENAME);
         onCreate(sqLiteDatabase);
     }
-    public boolean addData(String tName, String tTitle,int isComplete, int urgency, int importance) {
+    public boolean addData(String tName, String tTitle,int isComplete, int urgency, int importance, long dateDue) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -52,6 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COL6, importance);
         contentValues.put(COL7,priority);
         contentValues.put(COL8, System.currentTimeMillis());
+        contentValues.put(COL9, dateDue);
 
         long result = sqLiteDatabase.insert(TABLENAME, null, contentValues);
 

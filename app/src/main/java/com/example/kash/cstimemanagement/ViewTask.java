@@ -32,6 +32,8 @@ public class ViewTask extends AppCompatActivity {
     Button deleteButton;
     private int isUrgent, isImportant;
     TextView dateCreated;
+    TextView timeDue;
+    TextView dateDue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +54,21 @@ public class ViewTask extends AppCompatActivity {
         final boolean taskUrgency = intentExtras.getExtras().getBoolean("taskUrgency");
         final boolean taskImportance = intentExtras.getExtras().getBoolean("taskImportance");
         final long taskDateCreated = intentExtras.getExtras().getLong("taskDateCreated");
+        final long taskDateDue = intentExtras.getExtras().getLong("taskDateDue");
 
         taskTitle = (EditText) findViewById(R.id.view_task_title);
         taskDescription = (EditText) findViewById(R.id.view_task_description);
         urgentBox = (CheckBox) findViewById(R.id.activity_view_task_urgent_checkBox);
         importantBox = (CheckBox) findViewById(R.id.activity_view_task_important_checkBox);
         dateCreated = (TextView)findViewById(R.id.activity_view_task_date_created);
+        dateDue = (TextView)findViewById(R.id.activity_view_task_date_due);
+        timeDue = (TextView)findViewById(R.id.activity_view_task_time_due);
+
+        long longDateDue = taskDateDue;
+        String displayDueDate = formatDate(longDateDue, "dd/MM/yyyy");
+        dateDue.setText(displayDueDate);
+        String displayDueTime = formatDate(longDateDue, "HH:mm");
+        timeDue.setText(displayDueTime);
 
         long longDateCreated = taskDateCreated;
         String displayDate = formatDate(longDateCreated,"dd/MM/yyyy");
