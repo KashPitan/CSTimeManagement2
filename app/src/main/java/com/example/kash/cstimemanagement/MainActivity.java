@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
     private RecyclerView recyclerView;
 
     private Cursor data;
+
     private Adapter mAdapter;
 
     private DrawerLayout mDrawerLayout;
@@ -53,10 +55,16 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
     private TextView subheading;
     private String subheadingString;
 
+    private ImageView noDataImage;
+    private TextView noDataText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        noDataImage = (ImageView)findViewById(R.id.activity_main_no_data_image);
+        noDataText = (TextView)findViewById(R.id.activity_main_no_data_text);
 
         subheading = (TextView)findViewById(R.id.activity_main_subheader);
         subheadingString = "All Tasks";
@@ -88,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //second method for solving cursor initialization issue
+        //data = ;
+
         //retrieve data from database and store in Cursor object
         data = db.getData();
         //Toast.makeText(MainActivity.this, "N " + System.currentTimeMillis(), Toast.LENGTH_SHORT).show();
@@ -105,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                 switch(position){
                     //all tasks
                     case 0:
-                        Toast.makeText(MainActivity.this, "All tasks", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "All tasks", Toast.LENGTH_SHORT).show();
                         clearList();
                         recyclerViewItems();
                         data = db.getData();
@@ -115,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         break;
                     //completed tasks
                     case 1:
-                        Toast.makeText(MainActivity.this, "Completed Tasks", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Completed Tasks", Toast.LENGTH_SHORT).show();
                         clearList();
                         recyclerViewItems();
                         data = db.getCompleteData();
@@ -125,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         break;
                      //incomplete tasks
                     case 2:
-                        Toast.makeText(MainActivity.this, "Incomplete Tasks", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Incomplete Tasks", Toast.LENGTH_SHORT).show();
                         clearList();
                         recyclerViewItems();
                         data = db.getInCompleteTaskData();
@@ -135,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         break;
                     //prioritised tasks
                     case 3:
-                        Toast.makeText(MainActivity.this, "Prioritised Tasks", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Prioritised Tasks", Toast.LENGTH_SHORT).show();
                         clearList();
                         recyclerViewItems();
                         data = db.getPrioritisedTaskData();
@@ -163,8 +174,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                 final int position = viewHolder.getAdapterPosition();
                 Task t = displayList.get(position);
                 int index = t.getTaskDBId();
+                Log.d("NOTE: "," " + (position));
                 db.setToComplete(index);
-                mAdapter.removeFromRecycler(index);
+                mAdapter.removeFromRecycler(position);
 
             }
         };
@@ -179,7 +191,14 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
     //refresh items in recycler view
     public void recyclerViewItems(){
         int i = 0;
-        if(data.getCount() !=  0){
+
+        if(data.getCount() >  0){//only starts checking cursor for data if theres any data in the database
+            //first attempt to solve cursor initialisation issue
+           // data.moveToFirst();
+
+            noDataImage.setImageResource(0);
+            noDataText.setText("");
+
             while(data.moveToNext()){
                 Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7),data.getLong(8));
                 displayList.add(i,task);
@@ -191,7 +210,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
             recyclerView.setAdapter(mAdapter);
             recyclerView.setLayoutManager((new LinearLayoutManager(this)));
         }else{
-            Toast.makeText(MainActivity.this, "No data", Toast.LENGTH_SHORT).show();
+            noDataImage.setImageResource(R.drawable.splashscreenv2flatpurple);
+            noDataText.setText("No Tasks!");
+            //Toast.makeText(MainActivity.this, "No data", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -200,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
     public void onListItemClick(int itemIndex) {
         //Toast.makeText(MainActivity.this, "click test " + itemIndex, Toast.LENGTH_SHORT).show();
         Task t = displayList.get(itemIndex);
+        Log.d("NOTE: "," " + (itemIndex));
 
        //Toast.makeText(MainActivity.this, t.getTask() + " " + t.getTaskDetails() + " " + t.getTaskDBId() , Toast.LENGTH_SHORT).show();
        // Toast.makeText(MainActivity.this,t.isImportant() + " " + t.isUrgent(),Toast.LENGTH_SHORT).show();

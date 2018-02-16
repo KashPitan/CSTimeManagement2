@@ -77,13 +77,27 @@
         android:textColor="@color/colorPrimary"
         android:padding="4sp"/>
 
-    <TextView
-        android:id="@+id/activity_view_task_date_created"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Date Created"
-        android:padding="4sp"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/calendar_input_icon" />
+
+        <TextView
+            android:id="@+id/activity_view_task_date_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Date Created"
+            android:padding="4sp"/>
+
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -144,8 +158,6 @@
             android:padding="4sp"/>
 
     </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -216,7 +228,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="10sp"
                 android:textStyle="bold" />
-
 
         </LinearLayout>
     </RelativeLayout>

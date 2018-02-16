@@ -112,8 +112,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     }
 
     public void removeFromRecycler(int itemIndex){
-        TaskList.remove(itemIndex -1);
-        notifyItemRemoved(itemIndex-1);
+        TaskList.remove(itemIndex );
+        notifyItemRemoved(itemIndex);
     }
 
 }
