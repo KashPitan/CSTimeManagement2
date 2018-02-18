@@ -102,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //return only incomplete tasks
     public Cursor getInCompleteTaskData(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " WHERE " + COL4 + " = 0",null);
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " WHERE " + COL4 + " = 0" + " ORDER BY " +  COL7 + " ASC," + COL9 + " ASC",null);
         return data;
     }
 

@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:textSize="20sp"
-        android:paddingTop="4sp"
         android:layout_gravity="center"
         />
 

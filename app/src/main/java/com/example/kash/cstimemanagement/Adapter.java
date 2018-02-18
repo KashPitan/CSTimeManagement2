@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
@@ -48,6 +51,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
         holder.tvHeader.setText(Task.getTask());
         holder.tvDetails.setText(Task.getTaskDetails());
+        holder.tvDueDetails.setText("Due: " + formatDate(Task.getDateDue(),"dd/MM/yyyy HH:mm"));
 
         holder.priorityIcon.setImageResource(priorityImage(Task));
        // int id = mCursor.getInt(mCursor.getColumnIndex("TASKID"));
@@ -82,11 +86,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
         public TextView tvHeader;
         public TextView tvDetails;
+        public TextView tvDueDetails;
         public ImageView priorityIcon;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            tvDueDetails = (TextView)itemView.findViewById(R.id.task_list_item_due_details);
             tvHeader = (TextView)itemView.findViewById(R.id.item_header);
             tvDetails = (TextView)itemView.findViewById(R.id.item_details);
             priorityIcon = (ImageView) itemView.findViewById(R.id.task_list_item_priority_icon);
@@ -114,6 +121,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     public void removeFromRecycler(int itemIndex){
         TaskList.remove(itemIndex );
         notifyItemRemoved(itemIndex);
+    }
+
+    public String formatDate(long milli, String format){
+        DateFormat formatter = new SimpleDateFormat(format);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milli);
+        return formatter.format(calendar.getTime());
     }
 
 }

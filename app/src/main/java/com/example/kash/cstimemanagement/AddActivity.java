@@ -62,7 +62,7 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        setTitle("Add Task");
+        setTitle("New Task");
 
         displayDate = (TextView)findViewById(R.id.activity_add_date_input);
         displayDate.setOnClickListener(new OnClickListener() {
