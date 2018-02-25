@@ -49,7 +49,7 @@ public class IntroSlides extends AppCompatActivity {
             public void onClick(View v) {
                 if(currentPage == mDots.length -1 ){
                     //Toast.makeText(IntroSlides.this, "last", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(IntroSlides.this,MainActivity.class));
+                    startActivity(new Intent(IntroSlides.this,Main2Activity.class));
 
                 }else{
                     mSlideViewPager.setCurrentItem(currentPage + 1);

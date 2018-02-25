@@ -13,6 +13,26 @@ import java.sql.SQLInput;
  */
 
 public class DBHelper extends SQLiteOpenHelper {
+
+    public static final String TABLENAME2 = "projects";
+    public static final String PCOL1 = "PROJECTID";
+    public static final String PCOL2 = "PROJECTDATECREATED";
+    public static final String PCOL3 = "PROJECTDUEDATE";
+    public static final String PCOL4 = "PROJECTTITLE";
+
+    public static final String TABLENAME3 = "projectTasks";
+    public static final String PTCOL0 = "PROJECTID";
+    public static final String PTCOL1 = "PTASKID";
+    public static final String PTCOL2 = "PTASKNAME";
+    public static final String PTCOL3 = "PTASKDETAILS";
+    public static final String PTCOL4 = "PISCOMPLETE";
+    public static final String PTCOL5 = "PURGENCY";
+    public static final String PTCOL6 = "PIMPORTANCE";
+    public static final String PTCOL7 = "PPRIORITY";
+    public static final String PTCOL9 = "PDATECREATED";
+    public static final String PTCOL8 = "PDATEDUE";
+
+
     public static final String DBNAME = "task_database";
     public static final String TABLENAME = "tasks";
 
@@ -34,20 +54,24 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER, DATECREATED INTEGER, DATEDUE INTEGER)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME2 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PROJECTDUEDATE INTEGER, PROJECTTITLE TEXT)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME3 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PROJECTID INTEGER, PTASKNAME TEXT, PTASKDETAILS TEXT, PISCOMPLETE INTEGER, PURGENCY INTEGER, PIMPORTANCE INTEGER, PPRIORITY INTEGER, PDATECREATED INTEGER, PDATEDUE INTEGER)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLENAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLENAME2);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLENAME3);
         onCreate(sqLiteDatabase);
     }
-    public boolean addData(String tName, String tTitle,int isComplete, int urgency, int importance, long dateDue) {
+    public boolean addData(String tName, String tDetails,int isComplete, int urgency, int importance, long dateDue) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         int priority = getPriority(urgency,importance);
         contentValues.put(COL2, tName);
-        contentValues.put(COL3, tTitle);
+        contentValues.put(COL3, tDetails);
         contentValues.put(COL4,isComplete);
         contentValues.put(COL5, urgency);
         contentValues.put(COL6, importance);
@@ -63,6 +87,49 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    public boolean addProject(String pName, long dateDue){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(PCOL2, System.currentTimeMillis());
+        contentValues.put(PCOL3, dateDue);
+        contentValues.put(PCOL4, pName);
+
+
+        long result = sqLiteDatabase.insert(TABLENAME2, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public boolean addPTask(String name, String details,int isComplete, int urgency, int importance, long dateDue,int projectId) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        int priority = getPriority(urgency,importance);
+        contentValues.put(PTCOL0, projectId);
+        contentValues.put(PTCOL2, name);
+        contentValues.put(PTCOL3, details);//details?
+        contentValues.put(PTCOL4,isComplete);
+        contentValues.put(PTCOL5, urgency);
+        contentValues.put(PTCOL6, importance);
+        contentValues.put(PTCOL7,priority);
+        contentValues.put(PTCOL8, System.currentTimeMillis());
+        contentValues.put(PTCOL9, dateDue);
+
+        long result = sqLiteDatabase.insert(TABLENAME3, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     public Cursor getItemId(int itemIndex){
         return null;
     }
@@ -113,7 +180,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public void updateData(String tName, String tTitle,int id, int tUrgency, int tImportance) {
+    public void updateData(String tName, String tTitle,int id, int tUrgency, int tImportance,long tDueDate) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -122,6 +189,8 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COL5,tUrgency);
         contentValues.put(COL6,tImportance);
         contentValues.put(COL7,getPriority(tUrgency,tImportance));
+        contentValues.put(COL9,tDueDate);
+
         String idString[] = {String.valueOf(id)};
         sqLiteDatabase.update(TABLENAME,contentValues,"id=?",idString);
 
@@ -148,4 +217,63 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.update(TABLENAME, contentValues,"id=?", idString);
 
     }
+
+    public Cursor getProjectData(){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME2, null);
+        return data;
+    }
+
+    public Cursor getProjectTaskData(int projectId){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME3, null);
+        return data;
+    }
+
+    public void deleteProjectTaskData(int id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String idString[] = {String.valueOf(id)};
+        sqLiteDatabase.delete(TABLENAME3, "id=?", idString);
+    }
+
+    public void deleteProjectData(int id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String idString[] = {String.valueOf(id)};
+        sqLiteDatabase.delete(TABLENAME3, "PROJECTID=?", idString);
+        sqLiteDatabase.delete(TABLENAME2, "id=?", idString);
+
+    }
+
+    public void setPTaskToComplete(int id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PTCOL4, 1);
+        String idString[] = {String.valueOf(id)};
+
+        sqLiteDatabase.update(TABLENAME3, contentValues,"id=?", idString);
+
+    }
+
+    public void updatePTaskData(String ptName, String ptDetails,int id, int ptUrgency, int ptImportance,long ptDueDate) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PTCOL2, ptName);
+        contentValues.put(PTCOL3, ptDetails);
+        contentValues.put(PTCOL5,ptUrgency);
+        contentValues.put(PTCOL6,ptImportance);
+        contentValues.put(PTCOL7,getPriority(ptUrgency,ptImportance));
+        contentValues.put(PTCOL8,ptDueDate);
+
+        String idString[] = {String.valueOf(id)};
+        sqLiteDatabase.update(TABLENAME3,contentValues,"id=?",idString);
+
+       /*sqLiteDatabase.execSQL("UPDATE " + TABLENAME + " SET " + COL2 + " = " + tName  + " , " +
+                COL3 + " = " + tTitle + " WHERE " + COL1 + " = " + id);*/
+
+
+        //change to boolean and return true if successful
+    }
+
 }

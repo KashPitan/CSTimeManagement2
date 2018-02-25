@@ -21,7 +21,9 @@ public class SplashScreen extends Activity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    Intent intent = new Intent(SplashScreen.this,IntroSlides.class);
+                    //Intent intent = new Intent(SplashScreen.this,IntroSlides.class);
+                    //temporarily disable intro slides til complete
+                    Intent intent = new Intent(SplashScreen.this,Main2Activity.class);
                     startActivity(intent);
                     //start main activity once sleep time is up
                 }

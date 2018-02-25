@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/prioritised_fragment_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@android:color/transparent"
+        android:scrollbars="vertical" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/prioritised_fragment_add_task_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            app:fabSize="normal"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/mainactivity_add_task_button" />
+            -->
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/fragment_fab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab_menu_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/incomplete_tasks_icon"
+                app:fab_size="mini"
+                app:fab_label="New Task"
+                />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab_menu_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/prioritised_tasks_icon"
+                app:fab_size="mini"
+                app:fab_label="New Project"
+                />
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</android.support.constraint.ConstraintLayout>

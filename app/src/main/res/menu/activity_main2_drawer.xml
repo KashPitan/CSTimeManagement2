@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all_tasks"
+            android:icon="@drawable/all_tasks_icon"
+            android:title="All Tasks" />
+        <item
+            android:id="@+id/nav_prioritised_tasks"
+            android:icon="@drawable/prioritised_tasks_icon"
+            android:title="Priority order" />
+        <item
+            android:id="@+id/nav_completed_tasks"
+            android:icon="@drawable/complete_tasks_icon_2"
+            android:title="Completed Tasks" />
+        <item
+            android:id="@+id/nav_incomplete_tasks"
+            android:icon="@drawable/incomplete_tasks_icon"
+            android:title="Incomplete Tasks" />
+    </group>
+
+    <item android:title="Priority">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/priority_level_1"
+                android:title="Top Priority" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/priority_level_3"
+                android:title="Priority" />
+        </menu>
+    </item>
+
+</menu>

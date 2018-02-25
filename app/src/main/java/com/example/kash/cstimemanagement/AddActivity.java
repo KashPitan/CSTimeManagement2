@@ -141,7 +141,7 @@ public class AddActivity extends AppCompatActivity {
         backButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddActivity.this,MainActivity.class));
+                startActivity(new Intent(AddActivity.this,Main2Activity.class));
             }
         });
 
@@ -151,6 +151,8 @@ public class AddActivity extends AppCompatActivity {
         title = (EditText) findViewById(R.id.task_name_input);
         description = (EditText) findViewById(R.id.task_details_input);
         addDataButton = (Button) findViewById(R.id.button_save);
+
+        description.setText("");
 
         //back button in action bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -178,18 +180,19 @@ public class AddActivity extends AppCompatActivity {
                     isUrgent = 0;
                 }
 
-                if(taskTitle.length() != 0 && taskDescription.length() != 0){
+                if(taskTitle.length() != 0 /*&& taskDescription.length() != 0*/){
                     AddData(taskTitle,taskDescription,isUrgent,isImportant,dueDateLong);
                     description.setText("");
                     title.setText("");
-                    Log.e("CALENDAR INPUT", " " + dueYear + " " + dueMonth + " " + dueDay + " " + dueHour + " " + dueMinute);
-                    Log.e("CALENDAR INPUT LONG", " " + dueDateLong);
+                    //Log.e("CALENDAR INPUT", " " + dueYear + " " + dueMonth + " " + dueDay + " " + dueHour + " " + dueMinute);
+                    //Log.e("CALENDAR INPUT LONG", " " + dueDateLong);
                     //Toast.makeText(AddActivity.this, " " + dueDateLong, Toast.LENGTH_SHORT).show();
 
                     //switch back to main activity where new task should be shown
-                    startActivity(new Intent(AddActivity.this,MainActivity.class));
+                    startActivity(new Intent(AddActivity.this,Main2Activity.class));
                 }else{
-                    Toast.makeText(AddActivity.this, "Please Fill In", Toast.LENGTH_SHORT).show();
+                    title.setError("Please fill in");
+                   // Toast.makeText(AddActivity.this, "Please Fill In", Toast.LENGTH_SHORT).show();
                 }
             }
         });
