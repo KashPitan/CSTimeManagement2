@@ -22,17 +22,40 @@
             android:title="Incomplete Tasks" />
     </group>
 
-    <item android:title="Priority">
-        <menu>
+    <group
+        android:id="@+id/main2_drawer_projects"
+        android:checkableBehavior="single">
+        <item android:title="Projects">
+                <item
+                    android:id="@+id/nav_projects"
+                    android:icon="@drawable/priority_level_1"
+                    android:title="All Projects" />
+                <item
+                    android:id="@+id/nav_projects2"
+                    android:icon="@drawable/priority_level_3"
+                    android:title="Completed Projects?" />
+        </item>
+    </group>
+
+        <item android:title="Priority"
+                android:id="@+id/main2_drawer_priority">
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/priority_level_1"
-                android:title="Top Priority" />
+                android:id="@+id/nav_priority_1"
+                android:icon="@drawable/all_tasks_icon"
+                android:title="Priority level 1" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/priority_level_3"
-                android:title="Priority" />
-        </menu>
-    </item>
+                android:id="@+id/nav_priority_2"
+                android:icon="@drawable/all_tasks_icon"
+                android:title="Priority level 2" />
+            <item
+                android:id="@+id/nav_priority_3"
+                android:icon="@drawable/all_tasks_icon"
+                android:title="Priority level 3" />
+            <item
+                android:id="@+id/nav_priority_4"
+                android:icon="@drawable/all_tasks_icon"
+                android:title="Priority level 4" />
+        </item>
+
 
 </menu>

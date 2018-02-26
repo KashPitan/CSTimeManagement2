@@ -65,7 +65,7 @@
             android:layout_alignParentBottom="true">
 
             <Button
-                android:id="@+id/button_save"
+                android:id="@+id/activity_add_project_button_save"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -79,7 +79,7 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/activityAdd_button_back_"
+                android:id="@+id/activity_add_project_button_back"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"

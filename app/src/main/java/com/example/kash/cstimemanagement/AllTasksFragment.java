@@ -45,9 +45,6 @@ public class AllTasksFragment extends android.support.v4.app.Fragment implements
         data = db.getData();
         taskList = new ArrayList<>();
         recyclerViewItems();
-
-
-
         super.onCreate(savedInstanceState);
     }
 

@@ -53,7 +53,7 @@
                 android:id="@+id/fab_menu_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/prioritised_tasks_icon"
+                android:src="@drawable/new_project_button"
                 app:fab_size="mini"
                 app:fab_label="New Project"
                 />

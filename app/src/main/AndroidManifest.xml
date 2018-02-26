@@ -44,7 +44,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddProject" />
-        <activity android:name=".view_projects"></activity>
+        <activity android:name=".view_projects" />
+        <activity android:name=".ProjectTaskList" />
+        <activity android:name=".AddToProject"></activity>
     </application>
 
 </manifest>

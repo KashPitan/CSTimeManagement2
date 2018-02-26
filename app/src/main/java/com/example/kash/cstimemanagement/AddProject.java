@@ -1,6 +1,7 @@
 package com.example.kash.cstimemanagement;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -81,11 +82,21 @@ public class AddProject extends AppCompatActivity {
         };
 
         db = new DBHelper(this);
-        projectTitle = (EditText) findViewById(R.id.task_name_input);
+        projectTitle = (EditText) findViewById(R.id.add_project_name_input);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        backButton = (Button) findViewById(R.id.activity_add_project_button_back);
+        backButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddProject.this,Main2Activity.class));
+            }
+        });
+
+
+        addDataButton = (Button)findViewById(R.id.activity_add_project_button_save);
         addDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +109,7 @@ public class AddProject extends AppCompatActivity {
 
                 if(pTitle.length() != 0){
                     AddData(pTitle,dueDateLong);
+                    startActivity(new Intent(AddProject.this,Main2Activity.class));
 
                 }else{
                     projectTitle.setError("Please fill in");

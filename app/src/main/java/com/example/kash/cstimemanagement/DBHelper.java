@@ -54,7 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + TABLENAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASKNAME TEXT, TASKDETAILS TEXT, ISCOMPLETE INTEGER, URGENCY INTEGER, IMPORTANCE INTEGER, PRIORITY INTEGER, DATECREATED INTEGER, DATEDUE INTEGER)");
-        sqLiteDatabase.execSQL("create table " + TABLENAME2 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PROJECTDUEDATE INTEGER, PROJECTTITLE TEXT)");
+        sqLiteDatabase.execSQL("create table " + TABLENAME2 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PROJECTTITLE TEXT, PROJECTDATECREATED INTEGER, PROJECTDUEDATE INTEGER)");
         sqLiteDatabase.execSQL("create table " + TABLENAME3 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PROJECTID INTEGER, PTASKNAME TEXT, PTASKDETAILS TEXT, PISCOMPLETE INTEGER, PURGENCY INTEGER, PIMPORTANCE INTEGER, PPRIORITY INTEGER, PDATECREATED INTEGER, PDATEDUE INTEGER)");
     }
 
@@ -226,7 +226,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getProjectTaskData(int projectId){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME3, null);
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME3 + " WHERE " + PTCOL0 + " = " + projectId, null);
         return data;
     }
 

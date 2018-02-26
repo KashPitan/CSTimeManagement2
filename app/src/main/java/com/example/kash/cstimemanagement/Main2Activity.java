@@ -15,9 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
+
+import java.util.List;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private ExpandableListView expandableProjectList;
+    private List<Project> projectList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +101,9 @@ public class Main2Activity extends AppCompatActivity
             fragment = new CompletedTasksFragment();
         } else if (id == R.id.nav_incomplete_tasks) {
             fragment = new IncompleteTasksFragment();
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_projects) {
+            fragment = new ProjectFragment();
+        } else if (id == R.id.nav_projects2) {
 
         }
 
