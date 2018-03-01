@@ -1,5 +1,6 @@
 package com.example.kash.cstimemanagement;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,21 +23,39 @@ import java.util.List;
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ExpandableListView expandableProjectList;
-    private List<Project> projectList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main2);
-
         setTitle("");
+        Intent intentExtras = getIntent();
+        if(((intentExtras.getExtras()) != null)){
+            int loadFrag = intentExtras.getExtras().getInt("loadFrag");
+            switch (loadFrag) {
+                case 1:
+                    Fragment fragment = new ProjectFragment();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.content_main2_frame_layout,fragment);
+                    ft.commit();
+                    break;
+            }
+        }else{
+            Fragment fragment = new AllTasksFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.addToBackStack(null);
+            ft.replace(R.id.content_main2_frame_layout,fragment);
+            ft.commit();
+        }
 
-        Fragment fragment = new AllTasksFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.content_main2_frame_layout,fragment);
-        ft.commit();
+
+
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,11 +130,15 @@ public class Main2Activity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.content_main2_frame_layout,fragment);
+            ft.addToBackStack(null);
             ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
     }
 }

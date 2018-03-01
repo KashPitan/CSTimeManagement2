@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.sql.SQLInput;
 
@@ -13,6 +14,8 @@ import java.sql.SQLInput;
  */
 
 public class DBHelper extends SQLiteOpenHelper {
+
+    public static final int DATABASE_VERSION = 1;
 
     public static final String TABLENAME2 = "projects";
     public static final String PCOL1 = "PROJECTID";
@@ -70,6 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         int priority = getPriority(urgency,importance);
+
         contentValues.put(COL2, tName);
         contentValues.put(COL3, tDetails);
         contentValues.put(COL4,isComplete);
@@ -110,13 +114,18 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         int priority = getPriority(urgency,importance);
+        /*
+        Log.d("URGENCY","" + urgency);
+        Log.d("IMPORTANCE", "" + importance);
+        Log.d("PRIORITY","" + priority);
+        */
         contentValues.put(PTCOL0, projectId);
         contentValues.put(PTCOL2, name);
         contentValues.put(PTCOL3, details);//details?
         contentValues.put(PTCOL4,isComplete);
         contentValues.put(PTCOL5, urgency);
         contentValues.put(PTCOL6, importance);
-        contentValues.put(PTCOL7,priority);
+        contentValues.put(PTCOL7,getPriority(urgency,importance));
         contentValues.put(PTCOL8, System.currentTimeMillis());
         contentValues.put(PTCOL9, dateDue);
 
@@ -252,6 +261,16 @@ public class DBHelper extends SQLiteOpenHelper {
         String idString[] = {String.valueOf(id)};
 
         sqLiteDatabase.update(TABLENAME3, contentValues,"id=?", idString);
+
+    }
+
+    public void getPriorityLevelTask(int priorityLevel){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        //String idString[] = {String.valueOf(id)};
+        Cursor data = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLENAME + " WHERE " + PTCOL7 + " = " + priorityLevel, null);
+
+        //sqLiteDatabase.update(TABLENAME3, contentValues,"id=?", idString);
 
     }
 

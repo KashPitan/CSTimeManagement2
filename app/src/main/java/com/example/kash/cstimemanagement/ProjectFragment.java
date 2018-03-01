@@ -53,6 +53,9 @@ public class ProjectFragment extends android.support.v4.app.Fragment implements 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.project_fragment_layout, null);
+
+        ((Main2Activity)getActivity()).setActionBarTitle("Projects");
+
         recyclerView = (RecyclerView)rootView.findViewById(R.id.project_fragment_recycler_view);
 
         recyclerView.setHasFixedSize(true);
@@ -66,6 +69,16 @@ public class ProjectFragment extends android.support.v4.app.Fragment implements 
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(),AddProject.class));
+                /*
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+
+                AddProject2 addProject2 = new AddProject2();
+
+                ft.replace(R.id.content_main2_frame_layout, addProject2);
+                ft.addToBackStack(null);
+                ft.commit();
+                */
             }
         });
         return rootView;
@@ -81,8 +94,9 @@ public class ProjectFragment extends android.support.v4.app.Fragment implements 
         Project p = ProjectList.get(itemIndex);
 
        // android.support.v4.app.Fragment fragment = new ProjectTaskList();
-        FragmentManager fragmentManager = getFragmentManager();
+       /* FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+
 
         Bundle bundle = new Bundle();
         bundle.putString("projectTitle",p.getProjectTitle());
@@ -92,17 +106,19 @@ public class ProjectFragment extends android.support.v4.app.Fragment implements 
         projectTaskList.setArguments(bundle);
 
         ft.replace(R.id.content_main2_frame_layout, projectTaskList);
+        ft.addToBackStack(null);
         ft.commit();
+        */
 
         Log.d("NOTE: "," " + (itemIndex));
 
-        /*
-        Intent i = new Intent(getActivity(),ProjectTaskList.class);
+
+        Intent i = new Intent(getActivity(),ProjectTaskList2.class);
         //id of the project to compare against tasks
         i.putExtra("projectId", p.getDbId());
         i.putExtra("projectTitle",p.getProjectTitle());
         startActivity(i);
-        */
+
 
 
     }

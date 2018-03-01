@@ -25,14 +25,19 @@ public class ProjectTaskList extends android.support.v4.app.Fragment implements 
     private RecyclerView recyclerView;
     private PTaskAdapter mAdapter;
     private int projectId;
+    private String ProjectTitle;
     private com.github.clans.fab.FloatingActionButton addPTask;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         Bundle bundle = getArguments();
         String projectTitle = bundle.getString("projectTitle");
         projectId = bundle.getInt("projectId");
+        ProjectTitle = projectTitle;
+
 
         db = new DBHelper(getActivity());
         data = db.getProjectTaskData(projectId);
@@ -55,6 +60,8 @@ public class ProjectTaskList extends android.support.v4.app.Fragment implements 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_project_task_list, null);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.project_task_list_recycler_view);
+
+        ((Main2Activity)getActivity()).setActionBarTitle(ProjectTitle);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

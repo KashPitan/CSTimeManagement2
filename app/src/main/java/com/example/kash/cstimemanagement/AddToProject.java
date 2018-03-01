@@ -193,7 +193,8 @@ public class AddToProject extends AppCompatActivity {
                     //Toast.makeText(AddActivity.this, " " + dueDateLong, Toast.LENGTH_SHORT).show();
 
                     //switch back to main activity where new task should be shown
-                    startActivity(new Intent(AddToProject.this,Main2Activity.class));
+                    finish();
+                    //startActivity(new Intent(AddToProject.this,Main2Activity.class));
                 }else{
                     title.setError("Please fill in");
                     // Toast.makeText(AddActivity.this, "Please Fill In", Toast.LENGTH_SHORT).show();

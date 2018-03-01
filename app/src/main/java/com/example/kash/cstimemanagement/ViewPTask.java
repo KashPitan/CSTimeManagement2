@@ -6,11 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,16 +18,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class ViewTask extends AppCompatActivity {
+public class ViewPTask extends AppCompatActivity {
     DBHelper db;
 
     EditText taskTitle;
@@ -62,8 +57,7 @@ public class ViewTask extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_task);
-        setTitle("Edit Task");
+        setContentView(R.layout.activity_view_ptask);
 
         //back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -79,6 +73,8 @@ public class ViewTask extends AppCompatActivity {
         final boolean taskImportance = intentExtras.getExtras().getBoolean("taskImportance");
         final long taskDateCreated = intentExtras.getExtras().getLong("taskDateCreated");
         final long taskDateDue = intentExtras.getExtras().getLong("taskDateDue");
+
+        setTitle("Edit Task: " + taskName);
 
         taskTitle = (EditText) findViewById(R.id.view_task_title);
         taskDescription = (EditText) findViewById(R.id.view_task_description);
@@ -112,7 +108,7 @@ public class ViewTask extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dateDialog = new DatePickerDialog(ViewTask.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener,year,month,day);
+                DatePickerDialog dateDialog = new DatePickerDialog(ViewPTask.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener,year,month,day);
                 dateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dateDialog.show();
             }}
@@ -147,7 +143,7 @@ public class ViewTask extends AppCompatActivity {
                 int hour = cal2.get(Calendar.HOUR_OF_DAY);
                 int minute = cal2.get(Calendar.MINUTE);
 
-                TimePickerDialog timeDialog = new TimePickerDialog(ViewTask.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mTimeSetListener,hour,minute,true);
+                TimePickerDialog timeDialog = new TimePickerDialog(ViewPTask.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mTimeSetListener,hour,minute,true);
                 timeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timeDialog.show();
             }
@@ -216,7 +212,7 @@ public class ViewTask extends AppCompatActivity {
                     isImportant = 0;
                 }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ViewTask.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewPTask.this);
                 builder.setMessage("Save changes?");
                 builder.setTitle("UPDATE TASK");
 
@@ -227,22 +223,24 @@ public class ViewTask extends AppCompatActivity {
                         if(taskTitle.length() != 0 /*&& taskDescription.length() != 0*/){
                             UpdateData(sTaskTitle,sTaskDescription,taskId,isUrgent,isImportant,newDueDate);
                             //switch back to main activity where new task should be shown
-                            startActivity(new Intent(ViewTask.this,Main2Activity.class));
+                            finish();
+                            //startActivity(new Intent(ViewPTask.this,Main2Activity.class));
                         }else{
                             taskTitle.setError("Please fill in");
                             //Toast.makeText(ViewTask.this, "Please Fill In", Toast.LENGTH_SHORT).show();
 
                         }
-
-                        startActivity(new Intent(ViewTask.this,Main2Activity.class));
-                        Toast.makeText(ViewTask.this, "Changes Saved", Toast.LENGTH_SHORT).show();
+                        finish();
+                        //startActivity(new Intent(ViewPTask.this,Main2Activity.class));
+                        Toast.makeText(ViewPTask.this, "Changes Saved", Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(ViewTask.this,Main2Activity.class));
+                        finish();
+                        //startActivity(new Intent(ViewPTask.this,Main2Activity.class));
 
                     }
                 });
@@ -258,7 +256,7 @@ public class ViewTask extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ViewTask.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewPTask.this);
                 builder.setMessage("Delete task " + taskName + "?");
                 builder.setTitle("DELETE TASK");
 
@@ -268,8 +266,8 @@ public class ViewTask extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         db.deleteData(taskId);
-                        startActivity(new Intent(ViewTask.this,Main2Activity.class));
-                        Toast.makeText(ViewTask.this, "Task Deleted", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ViewPTask.this,Main2Activity.class));
+                        Toast.makeText(ViewPTask.this, "Task Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -295,9 +293,9 @@ public class ViewTask extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            Intent i = new Intent(this,Main2Activity.class);
-            startActivity(i);
-            //this.finish();
+            //Intent i = new Intent(this,Main2Activity.class);
+            //startActivity(i);
+            this.finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -311,7 +309,7 @@ public class ViewTask extends AppCompatActivity {
         return formatter.format(calendar.getTime());
     }
     public void UpdateData(String taskTitle, String taskDescription,int id,int taskUrgency,int taskImportance,long taskDueDate){
-         db.updateData(taskTitle,taskDescription,id,taskUrgency,taskImportance,taskDueDate);
+         db.updatePTaskData(taskTitle,taskDescription,id,taskUrgency,taskImportance,taskDueDate);
         /*
         //display toast messages to show user whether or not data entry has been successful
         if(insertData == true){

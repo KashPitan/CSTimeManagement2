@@ -4,11 +4,15 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,7 +24,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
-public class AddProject extends AppCompatActivity {
+public class AddProject2 extends android.support.v4.app.Fragment  {
 
     private EditText projectTitle;
     //private
@@ -41,13 +45,22 @@ public class AddProject extends AppCompatActivity {
     private int dueMinute = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        db = new DBHelper(getActivity());
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_project);
+    }
 
-        setTitle("Add a new Project");
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.activity_add_project,null);
 
-        displayDate = (TextView)findViewById(R.id.activity_add_date_input);
+        ((Main2Activity)getActivity()).setActionBarTitle("Add a new project");
+        //((Main2Activity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //((Main2Activity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        displayDate = (TextView)rootView.findViewById(R.id.activity_add_date_input);
         displayDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +69,7 @@ public class AddProject extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dateDialog = new DatePickerDialog(AddProject.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener,year,month,day);
+                DatePickerDialog dateDialog = new DatePickerDialog(getActivity(),android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener,year,month,day);
                 dateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dateDialog.show();
             }}
@@ -84,27 +97,33 @@ public class AddProject extends AppCompatActivity {
             }
         };
 
-        db = new DBHelper(this);
-        projectTitle = (EditText) findViewById(R.id.add_project_name_input);
-
+        projectTitle = (EditText) rootView.findViewById(R.id.add_project_name_input);
+        /*
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        backButton = (Button) findViewById(R.id.activity_add_project_button_back);
+        */
+        backButton = (Button) rootView.findViewById(R.id.activity_add_project_button_back);
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(AddProject.this,Main2Activity.class);
-                //int ProjectFragment = android.R.id(ProjectFragment.class);
-                i.putExtra("loadFrag", 1);
-                startActivity(i);
+                //startActivity(new Intent(getActivity(),Main2Activity.class));
 
-                //startActivity(new Intent(AddProject.this,Main2Activity.class));
+               // ((Main2Activity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                //((Main2Activity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+
+                ProjectFragment projectFragment = new ProjectFragment();
+
+                ft.replace(R.id.content_main2_frame_layout, projectFragment);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
 
 
-        addDataButton = (Button)findViewById(R.id.activity_add_project_button_save);
+        addDataButton = (Button)rootView.findViewById(R.id.activity_add_project_button_save);
         addDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,42 +136,30 @@ public class AddProject extends AppCompatActivity {
 
                 if(pTitle.length() != 0){
                     AddData(pTitle,dueDateLong);
-                    Intent i = new Intent(AddProject.this,Main2Activity.class);
-                    //int ProjectFragment = android.R.id(ProjectFragment.class);
-                    i.putExtra("loadFrag", 1);
-                    startActivity(i);
-                    //startActivity(new Intent(AddProject.this,Main2Activity.class));
+                   // ((Main2Activity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    //((Main2Activity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+
+                    ProjectFragment projectFragment = new ProjectFragment();
+
+                    ft.replace(R.id.content_main2_frame_layout, projectFragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                    //startActivity(new Intent(getActivity(),Main2Activity.class));
 
                 }else{
                     projectTitle.setError("Please fill in");
                 }
             }
         });
+
+        return rootView;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if(id == android.R.id.home){
-            Intent i = new Intent(this,Main2Activity.class);
-            //int ProjectFragment = android.R.id(ProjectFragment.class);
-            i.putExtra("loadFrag", 1);
-            startActivity(i);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(this,Main2Activity.class);
-        //int ProjectFragment = android.R.id(ProjectFragment.class);
-        i.putExtra("loadFrag", 1);
-        startActivity(i);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     public void AddData(String projectTitle, long dueDate){
@@ -161,9 +168,9 @@ public class AddProject extends AppCompatActivity {
 
         //display toast messages to show user whether or not data entry has been successful
         if(insertData == true){
-            Toast.makeText(AddProject.this, "Project added!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Project added!", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(AddProject.this, "Error: Project could not be added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Error: Project could not be added", Toast.LENGTH_SHORT).show();
         }
 
     }

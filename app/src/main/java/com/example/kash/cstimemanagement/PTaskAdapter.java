@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,15 +53,15 @@ public class PTaskAdapter extends RecyclerView.Adapter<PTaskAdapter.ViewHolder>{
         holder.tvHeader.setText(PTask.getTask());
         holder.tvDetails.setText(PTask.getTaskDetails());
         holder.tvDueDetails.setText("Due: " + formatDate(PTask.getDateDue(),"dd/MM/yyyy HH:mm"));
-
-        //holder.priorityIcon.setImageResource(priorityImage(PTask));
+        holder.priorityIcon.setImageResource(priorityImage(PTask));
         // int id = mCursor.getInt(mCursor.getColumnIndex("TASKID"));
         //holder.itemView.setTag(id);
     }
 
-    public int priorityImage(Task task){
+    public int priorityImage(PTask ptask){
         int priorityImageId;
-        switch(task.getPriority()){
+        Log.d("Priority", "" + ptask.getPriority());
+        switch(ptask.getPriority()){
             case 1: priorityImageId = R.drawable.priority_level_1;
                 break;
             case 2: priorityImageId = R.drawable.priority_level_2;

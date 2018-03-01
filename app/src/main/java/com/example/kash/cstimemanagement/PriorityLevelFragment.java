@@ -19,11 +19,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.github.clans.fab.FloatingActionButton;
+
 /**
- * Created by Kash on 18/02/2018.
+ * Created by Kash on 1/03/2018.
  */
 
-public class IncompleteTasksFragment extends android.support.v4.app.Fragment implements Adapter.clickListener {
+public class PriorityLevelFragment extends android.support.v4.app.Fragment implements Adapter.clickListener {
 
     DBHelper db;
     private Cursor data;
@@ -40,7 +42,7 @@ public class IncompleteTasksFragment extends android.support.v4.app.Fragment imp
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         db = new DBHelper(getActivity());
-        data = db.getInCompleteTaskData();
+        data = db.getPrioritisedTaskData();
         taskList = new ArrayList<>();
         recyclerViewItems();
 
@@ -53,7 +55,7 @@ public class IncompleteTasksFragment extends android.support.v4.app.Fragment imp
         View rootView = inflater.inflate(R.layout.prioritised_fragment_layout, null);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.prioritised_fragment_recycler_view);
 
-        ((Main2Activity)getActivity()).setActionBarTitle("Incomplete Tasks");
+        ((Main2Activity)getActivity()).setActionBarTitle("Prioritised Tasks");
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -61,8 +63,7 @@ public class IncompleteTasksFragment extends android.support.v4.app.Fragment imp
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
-
-        add_task_button = (com.github.clans.fab.FloatingActionButton)rootView.findViewById(R.id.fab_menu_2);
+        add_task_button = (com.github.clans.fab.FloatingActionButton)rootView.findViewById(R.id.fab_menu_1);
         add_task_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +100,8 @@ public class IncompleteTasksFragment extends android.support.v4.app.Fragment imp
 
         return rootView;
     }
+
+
 
     public void recyclerViewItems(){
         int i = 0;
@@ -148,6 +151,7 @@ public class IncompleteTasksFragment extends android.support.v4.app.Fragment imp
         i.putExtra("taskDateCreated", t.getDateCreated());
         i.putExtra("taskDateDue", t.getDateDue());
         startActivity(i);
+
     }
 }
 

@@ -55,6 +55,8 @@ public class PrioritisedFragment extends android.support.v4.app.Fragment impleme
         View rootView = inflater.inflate(R.layout.prioritised_fragment_layout, null);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.prioritised_fragment_recycler_view);
 
+        ((Main2Activity)getActivity()).setActionBarTitle("Prioritised Tasks");
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter(taskList,getActivity(),data);
