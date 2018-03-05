@@ -50,7 +50,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         Project Project = ProjectList.get(position);
 
         holder.tvHeader.setText(Project.getProjectTitle());
-        holder.tvDueDetails.setText("Due: " + formatDate(Project.getDateDue(),"dd/MM/yyyy HH:mm"));
+        holder.tvDueDetails.setText("Due: " + formatDate(Project.getDateDue(),"dd/MM/yyyy"));
 
         //holder.projectIcon.setImageResource(priorityImage(Task));
         // int id = mCursor.getInt(mCursor.getColumnIndex("TASKID"));

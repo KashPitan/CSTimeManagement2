@@ -112,7 +112,6 @@ public class Main2Activity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_all_tasks) {
-            // Handle the camera action
             fragment = new AllTasksFragment();
         } else if (id == R.id.nav_prioritised_tasks) {
             fragment = new PrioritisedFragment();
@@ -123,7 +122,15 @@ public class Main2Activity extends AppCompatActivity
         } else if (id == R.id.nav_projects) {
             fragment = new ProjectFragment();
         } else if (id == R.id.nav_projects2) {
-
+            fragment = new CompletedProjectFragment();
+        }else if (id == R.id.nav_priority_1){
+            fragment = new PriorityLevelFragment();
+        }else if (id == R.id.nav_priority_2){
+            fragment = new PriorityLevelFragment2();
+        }else if (id == R.id.nav_priority_3){
+            fragment = new PriorityLevelFragment3();
+        }else if (id == R.id.nav_priority_4){
+            fragment = new PriorityLevelFragment4();
         }
 
         if(fragment != null){

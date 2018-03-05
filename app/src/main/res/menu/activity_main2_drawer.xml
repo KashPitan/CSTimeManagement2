@@ -28,12 +28,12 @@
         <item android:title="Projects">
                 <item
                     android:id="@+id/nav_projects"
-                    android:icon="@drawable/all_projects_icon"
-                    android:title="All Projects" />
+                    android:icon="@drawable/incomplete_projects_icon"
+                    android:title="Incomplete Projects" />
                 <item
                     android:id="@+id/nav_projects2"
-                    android:icon="@drawable/priority_level_3"
-                    android:title="Completed Projects?" />
+                    android:icon="@drawable/complete_projects_icon"
+                    android:title="Completed Projects" />
         </item>
     </group>
 

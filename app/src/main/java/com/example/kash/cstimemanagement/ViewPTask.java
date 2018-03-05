@@ -309,7 +309,7 @@ public class ViewPTask extends AppCompatActivity {
         return formatter.format(calendar.getTime());
     }
     public void UpdateData(String taskTitle, String taskDescription,int id,int taskUrgency,int taskImportance,long taskDueDate){
-         db.updatePTaskData(taskTitle,taskDescription,id,taskUrgency,taskImportance,taskDueDate);
+         db.updateData(taskTitle,taskDescription,id,taskUrgency,taskImportance,taskDueDate);
         /*
         //display toast messages to show user whether or not data entry has been successful
         if(insertData == true){

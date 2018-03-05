@@ -32,7 +32,6 @@
         <activity
             android:name=".ViewTask"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".CompletedTasks" />
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"

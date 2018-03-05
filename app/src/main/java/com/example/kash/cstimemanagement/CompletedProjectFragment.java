@@ -1,13 +1,9 @@
 package com.example.kash.cstimemanagement;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-//import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -15,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -23,11 +18,13 @@ import com.github.clans.fab.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+//import android.support.design.widget.FloatingActionButton;
+
 /**
  * Created by Kash on 25/02/2018.
  */
 
-public class ProjectFragment extends android.support.v4.app.Fragment implements ProjectAdapter.clickListener {
+public class CompletedProjectFragment extends android.support.v4.app.Fragment implements ProjectAdapter.clickListener {
 
     DBHelper db;
     private Cursor data;
@@ -37,12 +34,12 @@ public class ProjectFragment extends android.support.v4.app.Fragment implements 
     private RecyclerView recyclerView;
     private ProjectAdapter mAdapter;
 
-    private com.github.clans.fab.FloatingActionButton addProject;
+    private FloatingActionButton addProject;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         db = new DBHelper(getActivity());
-        data = db.getProjectData();
+        data = db.getCompletedProjectData();
         ProjectList = new ArrayList<>();
         recyclerViewItems();
         super.onCreate(savedInstanceState);
@@ -64,7 +61,7 @@ public class ProjectFragment extends android.support.v4.app.Fragment implements 
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
-        addProject = (com.github.clans.fab.FloatingActionButton)rootView.findViewById(R.id.project_fragment_add_project_button);
+        addProject = (FloatingActionButton)rootView.findViewById(R.id.project_fragment_add_project_button);
         addProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,24 +78,6 @@ public class ProjectFragment extends android.support.v4.app.Fragment implements 
                 */
             }
         });
-
-        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                final int position = viewHolder.getAdapterPosition();
-                Project p = ProjectList.get(position);
-                int index = p.getDbId();
-                Log.d("NOTE: "," " + (position));
-                db.setProjectToComplete(index);
-                mAdapter.removeFromRecycler(position);
-            }
-        };
-        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
 
         return rootView;
     }
@@ -149,7 +128,7 @@ public class ProjectFragment extends android.support.v4.app.Fragment implements 
             // data.moveToFirst();
 
             while(data.moveToNext()){
-                Project project = new Project(data.getInt(0),data.getString(1),data.getLong(3),data.getLong(4));
+                Project project = new Project(data.getInt(0),data.getString(1),data.getLong(2),data.getLong(3));
                 ProjectList.add(i,project);
                 i++;
             }

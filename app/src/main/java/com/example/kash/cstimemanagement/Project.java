@@ -9,14 +9,17 @@ public class Project {
     private String ProjectTitle;
     private long dateDue;
     private long dateCreated;
-    //add list of ptasks
+    private boolean complete;
 
     public Project(int dbId, String projectTitle, long dateDue, long dateCreated) {
         this.dbId = dbId;
         ProjectTitle = projectTitle;
         this.dateDue = dateDue;
         this.dateCreated = dateCreated;
+        this.complete = false;
     }
+
+    public boolean isComplete(){return complete;}
 
     public int getDbId() {
         return dbId;

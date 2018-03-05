@@ -5,6 +5,8 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,9 +25,11 @@ public class SliderAdapter extends PagerAdapter{
         this.context = context;
     }
 
-    public String[] headings = {"HEAD1","HEAD2","HEAD3"};
+    public int[] images = {R.drawable.intromanage,R.drawable.grouptoproject,R.drawable.swipetocomplete};
 
-    public String[] descriptions = {"DESC1","DESC2","DESC3"};
+    public String[] headings = {"Maximise Productivity","Create Projects","Swipe to complete"};
+
+    public String[] descriptions = {"Create tasks and have them automatically prioritised","Keep groups of tasks organised by grouping them into projects","Keep track of completed tasks by swiping them"};
 
     @Override
     public int getCount() {
@@ -34,7 +38,7 @@ public class SliderAdapter extends PagerAdapter{
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == (RelativeLayout) object;
+        return view == (LinearLayout) object;
     }
 
 
@@ -45,6 +49,11 @@ public class SliderAdapter extends PagerAdapter{
 
         TextView heading = (TextView) view.findViewById(R.id.introTitle);
         TextView description = (TextView) view.findViewById(R.id.introDescription);
+        ImageView image = (ImageView)view.findViewById(R.id.intro_image);
+
+        heading.setText(headings[position]);
+        description.setText(descriptions[position]);
+        image.setImageResource(images[position]);
 
         container.addView(view);
 
@@ -54,7 +63,7 @@ public class SliderAdapter extends PagerAdapter{
     @Override
     public void destroyItem (ViewGroup container, int position, Object object) {
 
-        container.removeView((RelativeLayout)object);
+        container.removeView((LinearLayout)object);
 
     }
 

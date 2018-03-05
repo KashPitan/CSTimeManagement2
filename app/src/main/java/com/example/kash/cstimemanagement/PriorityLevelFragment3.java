@@ -1,11 +1,9 @@
 package com.example.kash.cstimemanagement;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-//import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -19,13 +17,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.clans.fab.FloatingActionButton;
+//import com.github.clans.fab.FloatingActionButton;
 
 /**
- * Created by Kash on 18/02/2018.
+ * Created by Kash on 1/03/2018.
  */
 
-public class AllTasksFragment extends android.support.v4.app.Fragment implements Adapter.clickListener {
+public class PriorityLevelFragment3 extends android.support.v4.app.Fragment implements Adapter.clickListener {
 
     DBHelper db;
     private Cursor data;
@@ -42,9 +40,10 @@ public class AllTasksFragment extends android.support.v4.app.Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         db = new DBHelper(getActivity());
-        data = db.getData(-1);
+        data = db.getPriorityLevelTask(3);
         taskList = new ArrayList<>();
         recyclerViewItems();
+
         super.onCreate(savedInstanceState);
     }
 
@@ -54,14 +53,13 @@ public class AllTasksFragment extends android.support.v4.app.Fragment implements
         View rootView = inflater.inflate(R.layout.prioritised_fragment_layout, null);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.prioritised_fragment_recycler_view);
 
-        ((Main2Activity)getActivity()).setActionBarTitle("All Tasks");
+        ((Main2Activity)getActivity()).setActionBarTitle("Prioritised Tasks");
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter(taskList,getActivity(),data);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
-
 
         add_task_button = (com.github.clans.fab.FloatingActionButton)rootView.findViewById(R.id.fab_menu_1);
         add_task_button.setOnClickListener(new View.OnClickListener() {
@@ -97,15 +95,18 @@ public class AllTasksFragment extends android.support.v4.app.Fragment implements
         };
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
 
+
         return rootView;
     }
+
+
 
     public void recyclerViewItems(){
         int i = 0;
 
         if(data.getCount() >  0){//only starts checking cursor for data if theres any data in the database
             //first attempt to solve cursor initialisation issue
-           // data.moveToFirst();
+            //data.moveToFirst();
 
             while(data.moveToNext()){
                 Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7),data.getLong(8),data.getInt(9));
@@ -148,6 +149,7 @@ public class AllTasksFragment extends android.support.v4.app.Fragment implements
         i.putExtra("taskDateCreated", t.getDateCreated());
         i.putExtra("taskDateDue", t.getDateDue());
         startActivity(i);
+
     }
 }
 

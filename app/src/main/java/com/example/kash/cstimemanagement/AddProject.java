@@ -67,7 +67,7 @@ public class AddProject extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int day) {
 
                 //month value is 1 short of being correct
-                month++;
+                //month++;
 
                 //save the input values to convert to long value for later
                 dueYear = year;

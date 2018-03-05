@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
         //data = ;
 
         //retrieve data from database and store in Cursor object
-        data = db.getData();
+        data = db.getData(-1);
         //Toast.makeText(MainActivity.this, "N " + System.currentTimeMillis(), Toast.LENGTH_SHORT).show();
 
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         //Toast.makeText(MainActivity.this, "All tasks", Toast.LENGTH_SHORT).show();
                         clearList();
                         recyclerViewItems();
-                        data = db.getData();
+                        data = db.getData(-1);
                         recyclerViewItems();
                         subheading.setText("All Tasks");
                         mDrawerLayout.closeDrawers();
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         //Toast.makeText(MainActivity.this, "Completed Tasks", Toast.LENGTH_SHORT).show();
                         clearList();
                         recyclerViewItems();
-                        data = db.getCompleteData();
+                        data = db.getCompleteData(-1);
                         recyclerViewItems();
                         subheading.setText("Completed Tasks");
                         mDrawerLayout.closeDrawers();
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         //Toast.makeText(MainActivity.this, "Incomplete Tasks", Toast.LENGTH_SHORT).show();
                         clearList();
                         recyclerViewItems();
-                        data = db.getInCompleteTaskData();
+                        data = db.getInCompleteTaskData(-1);
                         recyclerViewItems();
                         subheading.setText("Incomplete Tasks");
                         mDrawerLayout.closeDrawers();
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
                         //Toast.makeText(MainActivity.this, "Prioritised Tasks", Toast.LENGTH_SHORT).show();
                         clearList();
                         recyclerViewItems();
-                        data = db.getPrioritisedTaskData();
+                        data = db.getPrioritisedTaskData(-1);
                         recyclerViewItems();
                         subheading.setText("Prioritised Tasks");
                         mDrawerLayout.closeDrawers();
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.clickList
             noDataText.setText("");
 
             while(data.moveToNext()){
-                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7),data.getLong(8));
+                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7),data.getLong(8),-1);
                 displayList.add(i,task);
                 i++;
             }

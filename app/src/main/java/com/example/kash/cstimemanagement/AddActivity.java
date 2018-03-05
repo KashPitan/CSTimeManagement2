@@ -210,7 +210,8 @@ public class AddActivity extends AppCompatActivity {
 
     public void AddData(String taskTitle, String taskDescription, int isUrgent, int isImportant,long dueDate){
         //task labelled incomplete upon creation
-       boolean insertData = db.addData(taskTitle,taskDescription,0,isUrgent, isImportant,dueDate);
+        //input of projectid is -1 for "free floating tasks" (tasks not attached to a project)
+       boolean insertData = db.addData(taskTitle,taskDescription,0,isUrgent, isImportant,dueDate,-1);
 
                 //display toast messages to show user whether or not data entry has been successful
                 if(insertData == true){

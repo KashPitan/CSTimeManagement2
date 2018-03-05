@@ -185,6 +185,8 @@ public class AddToProject extends AppCompatActivity {
                 }
 
                 if(taskTitle.length() != 0 /*&& taskDescription.length() != 0*/){
+                    Log.e("PRIORITYURG","" + isUrgent);
+                    Log.e("PRIORITYURG", "" + isImportant);
                     AddData(taskTitle,taskDescription,isUrgent,isImportant,dueDateLong,ProjectId);
                     description.setText("");
                     title.setText("");
@@ -215,7 +217,7 @@ public class AddToProject extends AppCompatActivity {
 
     public void AddData(String taskTitle, String taskDescription, int isUrgent, int isImportant,long dueDate,int projectId){
         //task labelled incomplete upon creation
-        boolean insertData = db.addPTask(taskTitle,taskDescription,0,isUrgent, isImportant,dueDate,projectId);
+        boolean insertData = db.addData(taskTitle,taskDescription,0,isUrgent, isImportant,dueDate,projectId);
 
         //display toast messages to show user whether or not data entry has been successful
         if(insertData == true){

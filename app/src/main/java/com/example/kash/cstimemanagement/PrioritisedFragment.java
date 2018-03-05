@@ -42,7 +42,7 @@ public class PrioritisedFragment extends android.support.v4.app.Fragment impleme
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         db = new DBHelper(getActivity());
-        data = db.getPrioritisedTaskData();
+        data = db.getPrioritisedTaskData(-1);
         taskList = new ArrayList<>();
         recyclerViewItems();
 
@@ -111,7 +111,7 @@ public class PrioritisedFragment extends android.support.v4.app.Fragment impleme
              //data.moveToFirst();
 
             while(data.moveToNext()){
-                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7),data.getLong(8));
+                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7),data.getLong(8),data.getInt(9));
                 taskList.add(i,task);
                 i++;
             }

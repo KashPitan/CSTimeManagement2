@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             case 4: priorityImageId = R.drawable.priority_level_4;
                 break;
             default: priorityImageId = R.drawable.priority_level_4;
+                    Log.e("PRIORITY IMAGE", "default image");
                 break;
         }
         return priorityImageId;

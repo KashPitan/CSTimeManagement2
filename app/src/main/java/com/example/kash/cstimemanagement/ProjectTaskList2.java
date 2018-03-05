@@ -16,15 +16,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectTaskList2 extends AppCompatActivity implements PTaskAdapter.clickListener{
+public class ProjectTaskList2 extends AppCompatActivity implements Adapter.clickListener{
 
     DBHelper db;
     private Cursor data;
 
-    private List<PTask> pTaskList;
+    private List<Task> TaskList;
 
     private RecyclerView recyclerView;
-    private PTaskAdapter mAdapter;
+    private Adapter mAdapter;
     private int projectId;
     private String ProjectTitle;
     private com.github.clans.fab.FloatingActionButton addPTask;
@@ -48,13 +48,13 @@ public class ProjectTaskList2 extends AppCompatActivity implements PTaskAdapter.
         setTitle(projectTitle);
 
         db = new DBHelper(this);
-        data = db.getProjectTaskData(projectId);
-        pTaskList = new ArrayList<>();
+        data = db.getData(projectId);
+        TaskList = new ArrayList<>();
 
         recyclerView = (RecyclerView)findViewById(R.id.project_task_list_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new PTaskAdapter(pTaskList,this,data);
+        mAdapter = new Adapter(TaskList,this,data);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
@@ -99,16 +99,16 @@ public class ProjectTaskList2 extends AppCompatActivity implements PTaskAdapter.
 
     @Override
     public void onListItemClick(int itemIndex) {
-        PTask pt = pTaskList.get(itemIndex);
+        Task t = TaskList.get(itemIndex);
         Intent i = new Intent(this,ViewPTask.class);
-        i.putExtra("taskName",pt.getTask());
-        i.putExtra("taskDetails",pt.getTaskDetails());
-        i.putExtra("taskId", pt.getDbId());
-        i.putExtra("taskUrgency",pt.getUrgency());
-        i.putExtra("taskImportance",pt.getImportance());
-        i.putExtra("taskPriority", pt.getPriority());
-        i.putExtra("taskDateCreated", pt.getDateCreated());
-        i.putExtra("taskDateDue", pt.getDateDue());
+        i.putExtra("taskName",t.getTask());
+        i.putExtra("taskDetails",t.getTaskDetails());
+        i.putExtra("taskId", t.getTaskDBId());
+        i.putExtra("taskUrgency",t.isUrgent());
+        i.putExtra("taskImportance",t.isImportant());
+        i.putExtra("taskPriority", t.getPriority());
+        i.putExtra("taskDateCreated", t.getDateCreated());
+        i.putExtra("taskDateDue", t.getDateDue());
         startActivity(i);
 
     }
@@ -120,8 +120,8 @@ public class ProjectTaskList2 extends AppCompatActivity implements PTaskAdapter.
             // data.moveToFirst();
 
             while(data.moveToNext()){
-                PTask ptask = new PTask(data.getString(2),data.getString(3),data.getInt(0),data.getInt(1),data.getInt(5),data.getInt(6),data.getInt(7),data.getLong(8),data.getLong(9));
-                pTaskList.add(i,ptask);
+                Task task = new Task(data.getString(1),data.getString(2),data.getInt(0),data.getInt(4),data.getInt(5),data.getInt(6),data.getLong(7),data.getLong(8),data.getInt(9));
+                TaskList.add(i,task);
                 i++;
             }
 

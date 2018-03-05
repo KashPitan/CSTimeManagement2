@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:textSize="20sp"
+        android:paddingBottom="10sp"
         />
 
     <TextView
@@ -42,14 +43,16 @@
 
     <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="70sp"
+    android:layout_height="50sp"
     android:id="@+id/activity_add_scroll_view_description"
     android:background="@drawable/border"
-    >
+        android:paddingBottom="10sp"
+        >
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="10sp"
         >
 
         <EditText
@@ -60,6 +63,7 @@
             android:background="@android:color/transparent"
             android:inputType="textMultiLine"
             android:textSize="15sp"
+            android:paddingBottom="10sp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -76,6 +80,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingBottom="10sp"
+
         >
 
         <ImageView
@@ -104,6 +110,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingBottom="10sp"
+
         >
 
         <ImageView
@@ -132,7 +140,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-       >
+        android:paddingBottom="10sp"
+
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -153,6 +163,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingBottom="10sp"
+
         >
 
         <ImageView
